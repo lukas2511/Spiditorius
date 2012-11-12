@@ -84,9 +84,11 @@ void Update(uint32_t a)
     }
     if(controller_state.buttons.Left){
         x--;
+        sprite=3;
     }
     if(controller_state.buttons.Right){
         x++;
+        sprite=4;
     }
     spider_anim++;
 
@@ -101,10 +103,10 @@ void Update(uint32_t a)
 
 const RLEBitmap* const spider_thing(){
     switch(spider_anim){
-        case 1: return (sprite==2) ? spider_d_anim_1 : spider_u_anim_1;
-        case 2: return (sprite==2) ? spider_d_anim_2 : spider_u_anim_2;
-        case 3: return (sprite==2) ? spider_d_anim_3 : spider_u_anim_3;
-        case 4: return (sprite==2) ? spider_d_anim_4 : spider_u_anim_4;
+        case 1: return (sprite!=4) ? (sprite!=3) ? (sprite==2) ? spider_d_anim_1 : spider_u_anim_1 : spider_l_anim_1 : spider_r_anim_1;
+        case 2: return (sprite!=4) ? (sprite!=3) ? (sprite==2) ? spider_d_anim_2 : spider_u_anim_2 : spider_l_anim_2 : spider_r_anim_2;
+        case 3: return (sprite!=4) ? (sprite!=3) ? (sprite==2) ? spider_d_anim_3 : spider_u_anim_3 : spider_l_anim_3 : spider_r_anim_3;
+        case 4: return (sprite!=4) ? (sprite!=3) ? (sprite==2) ? spider_d_anim_4 : spider_u_anim_4 : spider_l_anim_4 : spider_r_anim_4;
         default: return spider;
     }
 }
