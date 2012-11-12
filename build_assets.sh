@@ -14,7 +14,7 @@ do
 	PNGConverter $asset RLEBitmap $name >> src/Sprites.c
 	echo >> src/Sprites.c
 
-	echo 'extern const RLEBitmap *const '$name >> inc/Sprites.h
+	echo 'extern const RLEBitmap *const '$name';' >> inc/Sprites.h
 done
 
 echo '#endif' >> inc/Sprites.h
