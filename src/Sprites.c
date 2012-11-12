@@ -1,6 +1,6 @@
 #include <RLEBitmap.h>
 
-const RLEBitmap * const Spider=
+const RLEBitmap * const spider=
 (const RLEBitmap *)&(const struct { RLEBitmap rle; Pixel codes[RLECodeCount(256,16,0)]; }){
 	{ 16,16 },
 	{
@@ -74,3 +74,4 @@ const RLEBitmap * const Spider=
 		RGB(0xff,0xff,0xff),RGB(0xff,0xff,0xff),RGB(0xff,0xff,0xff),RGB(0xff,0xff,0xff),
 	}
 };
+

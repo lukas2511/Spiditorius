@@ -39,5 +39,5 @@ void Draw(Bitmap *b)
 {
     ClearBitmap(b);
 
-    DrawRLEBitmap(b, Spider, 5, 10);
+    DrawRLEBitmap(b, spider, 5, 10);
 }

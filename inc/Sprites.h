@@ -3,6 +3,6 @@
 
 #include <RLEBitmap.h>
 
-extern const RLEBitmap *const Spider;
+extern const RLEBitmap *const spider;
 
 #endif
