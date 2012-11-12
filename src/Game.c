@@ -52,25 +52,48 @@ void Update(uint32_t a)
 
     if(x<-8) x=320+x;
     if(y<-8) y=200+y;
-    if(x>320) x=-8;
-    if(y>200) y=-8;
+    if(x>312) x=-8;
+    if(y>192) y=-8;
 }
 
 void Draw(Bitmap *b)
 {
     ClearBitmap(b);
+    DrawFilledRectangle(b, 0, 0, 320, 200, RGB(255,255,255));
 
-    if(x<0){
-        DrawRLEBitmap(b, spider, 320+x, y);
+    if(x<0 && y>0 && y<=184){
+        // rand links
+        DrawRLEBitmap(b, spider, 320+x, y); // rechter rand
+    }else if(x<0 && y<0){
+        // ecke oben links
+        DrawRLEBitmap(b, spider, 320+x, y); // oben rechts
+        DrawRLEBitmap(b, spider, x, 200+y); // unten links
+        DrawRLEBitmap(b, spider, 320+x, 200+y); // unten rechts
+    }else if(y<0 && x>0 && x<=304){
+        // rand oben
+        DrawRLEBitmap(b, spider, x, 320+y); // rand unten
+    }else if(y<0 && x>304){
+        // ecke oben rechts
+        DrawRLEBitmap(b, spider, -(320-x), y); // oben links
+        DrawRLEBitmap(b, spider, x, 200+y); // unten rechts
+        DrawRLEBitmap(b, spider, -(320-x), 200+y); // unten links
+    }else if(x>304 && y>0 && y<=184){
+        // rand rechts
+        DrawRLEBitmap(b, spider, -(320+x), y); // rand links
+    }else if(x>304 && y>184){
+        // ecke unten rechts
+        DrawRLEBitmap(b, spider, -(320-x), y); // unten links
+        DrawRLEBitmap(b, spider, x, -(200-y)); // oben rechts
+        DrawRLEBitmap(b, spider, -(320-x), -(200-y)); // oben links
+    }else if(y>184 && x>0 && x<=304){
+        // rand unten
+        DrawRLEBitmap(b, spider, x, -(200-y)); // rand oben
+    }else if(x<0 && y>184){
+        // ecke unten links
+        DrawRLEBitmap(b, spider, 320+x, y); // unten rechts;
+        DrawRLEBitmap(b, spider, x, -(200-y)); // oben links;
+        DrawRLEBitmap(b, spider, 320+x, -(200-y)); // oben rechts;
     }
-    if(y<0){
-        DrawRLEBitmap(b, spider, x, 200+y);
-        if(x<0){
-            DrawRLEBitmap(b, spider, 320+x, 200+y);
-        }
-    }
-    if(x>312){
-        DrawRLEBitmap(b, spider, -(320-x), y);        
-    }
+
     DrawRLEBitmap(b, spider, x, y);
 }
