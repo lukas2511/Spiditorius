@@ -66,6 +66,7 @@ void OnLeave(struct Gamestate* state)
 
 int spider_anim=1;
 
+int sprite=1;
 
 void Update(uint32_t a)
 {
@@ -75,9 +76,11 @@ void Update(uint32_t a)
 
     if(controller_state.buttons.Up){
         y--;
+        sprite=1;
     }
     if(controller_state.buttons.Down){
         y++;
+        sprite=2;
     }
     if(controller_state.buttons.Left){
         x--;
@@ -98,10 +101,10 @@ void Update(uint32_t a)
 
 const RLEBitmap* const spider_thing(){
     switch(spider_anim){
-        case 1: return spider_d_anim_1; break;
-        case 2: return spider_d_anim_2; break;
-        case 3: return spider_d_anim_3; break;
-        case 4: return spider_d_anim_4; break;
+        case 1: return (sprite==2) ? spider_d_anim_1 : spider_u_anim_1;
+        case 2: return (sprite==2) ? spider_d_anim_2 : spider_u_anim_2;
+        case 3: return (sprite==2) ? spider_d_anim_3 : spider_u_anim_3;
+        case 4: return (sprite==2) ? spider_d_anim_4 : spider_u_anim_4;
         default: return spider;
     }
 }
