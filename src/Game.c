@@ -19,6 +19,18 @@ void Draw(Bitmap *);
 Gamestate InitState = { Init, OnEnter, OnLeave, Update, Draw };
 Game* TheGame = &(Game) {&InitState};
 
+struct spider_animation_t{
+	const RLEBitmap* bitmaps[4];
+	unsigned char count;
+	unsigned char current;
+} spider_animation = {{&spider_d_anim_1,&spider_d_anim_2,&spider_d_anim_3,&spider_d_anim_4},4,0};
+
+inline RLEBitmap * getAnimation(spider_animation_t * an){
+	RLEBitmap * tmp = an->bitmaps[an->current++];
+	an->current %= an->count;
+	return tmp;
+}
+
 int x=5;
 int y=5;
 
@@ -61,39 +73,41 @@ void Draw(Bitmap *b)
     ClearBitmap(b);
     DrawFilledRectangle(b, 0, 0, 320, 200, RGB(255,255,255));
 
+	RLEBitmap * spider_anim = getAnimation(&spider_animation);
+	
     if(x<0 && y>0 && y<=184){
         // rand links
-        DrawRLEBitmap(b, spider, 320+x, y); // rechter rand
+        DrawRLEBitmap(b, spider_anim, 320+x, y); // rechter rand
     }else if(x<0 && y<0){
         // ecke oben links
-        DrawRLEBitmap(b, spider, 320+x, y); // oben rechts
-        DrawRLEBitmap(b, spider, x, 200+y); // unten links
-        DrawRLEBitmap(b, spider, 320+x, 200+y); // unten rechts
+        DrawRLEBitmap(b, spider_anim, 320+x, y); // oben rechts
+        DrawRLEBitmap(b, spider_anim, x, 200+y); // unten links
+        DrawRLEBitmap(b, spider_anim, 320+x, 200+y); // unten rechts
     }else if(y<0 && x>0 && x<=304){
         // rand oben
-        DrawRLEBitmap(b, spider, x, 320+y); // rand unten
+        DrawRLEBitmap(b, spider_anim, x, 320+y); // rand unten
     }else if(y<0 && x>304){
         // ecke oben rechts
-        DrawRLEBitmap(b, spider, -(320-x), y); // oben links
-        DrawRLEBitmap(b, spider, x, 200+y); // unten rechts
-        DrawRLEBitmap(b, spider, -(320-x), 200+y); // unten links
+        DrawRLEBitmap(b, spider_anim, -(320-x), y); // oben links
+        DrawRLEBitmap(b, spider_anim, x, 200+y); // unten rechts
+        DrawRLEBitmap(b, spider_anim, -(320-x), 200+y); // unten links
     }else if(x>304 && y>0 && y<=184){
         // rand rechts
-        DrawRLEBitmap(b, spider, -(320+x), y); // rand links
+        DrawRLEBitmap(b, spider_anim, -(320+x), y); // rand links
     }else if(x>304 && y>184){
         // ecke unten rechts
-        DrawRLEBitmap(b, spider, -(320-x), y); // unten links
-        DrawRLEBitmap(b, spider, x, -(200-y)); // oben rechts
-        DrawRLEBitmap(b, spider, -(320-x), -(200-y)); // oben links
+        DrawRLEBitmap(b, spider_anim, -(320-x), y); // unten links
+        DrawRLEBitmap(b, spider_anim, x, -(200-y)); // oben rechts
+        DrawRLEBitmap(b, spider_anim, -(320-x), -(200-y)); // oben links
     }else if(y>184 && x>0 && x<=304){
         // rand unten
-        DrawRLEBitmap(b, spider, x, -(200-y)); // rand oben
+        DrawRLEBitmap(b, spider_anim, x, -(200-y)); // rand oben
     }else if(x<0 && y>184){
         // ecke unten links
-        DrawRLEBitmap(b, spider, 320+x, y); // unten rechts;
-        DrawRLEBitmap(b, spider, x, -(200-y)); // oben links;
-        DrawRLEBitmap(b, spider, 320+x, -(200-y)); // oben rechts;
+        DrawRLEBitmap(b, spider_anim, 320+x, y); // unten rechts;
+        DrawRLEBitmap(b, spider_anim, x, -(200-y)); // oben links;
+        DrawRLEBitmap(b, spider_anim, 320+x, -(200-y)); // oben rechts;
     }
 
-    DrawRLEBitmap(b, spider, x, y);
+    DrawRLEBitmap(b, spider_anim, x, y);
 }
