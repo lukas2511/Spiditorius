@@ -19,7 +19,7 @@ void Draw(Bitmap *);
 Gamestate InitState = { Init, OnEnter, OnLeave, Update, Draw };
 Game* TheGame = &(Game) {&InitState};
 
-int x=5;
+int x=280;
 int y=5;
 
 
@@ -70,7 +70,7 @@ int sprite=1;
 
 void Update(uint32_t a)
 {
-    if(buttonPressedCountStuff(0, 10)){
+    if(buttonPressedCountStuff(0, 2)){
 
     snes_button_state_t controller_state = GetControllerState1();
 
@@ -134,7 +134,7 @@ void Draw(Bitmap *b)
         DrawRLEBitmap(b, spider_thing(), -(320-x), 200+y); // unten links
     }else if(x>304 && y>0 && y<=184){
         // rand rechts
-        DrawRLEBitmap(b, spider_thing(), -(320+x), y); // rand links
+        DrawRLEBitmap(b, spider_thing(), -(320-x), y); // rand links
     }else if(x>304 && y>184){
         // ecke unten rechts
         DrawRLEBitmap(b, spider_thing(), -(320-x), y); // unten links
