@@ -10,6 +10,8 @@
 #include <math.h>
 #include "../inc/Sprites.h"
 
+#define timers_count 20
+
 void Init(struct Gamestate*);
 void OnEnter(struct Gamestate* state);
 void OnLeave(struct Gamestate* state);
@@ -22,38 +24,31 @@ Game* TheGame = &(Game) {&InitState};
 int x=280;
 int y=5;
 
-uint32_t delay[4]={0,0,0, 0};
+uint32_t timers[timers_count];
 
-int buttonTimes[2];
+uint32_t buttonTimes[2];
 
-int buttonPressedCountStuff(int controller, int count){
-    snes_button_state_t controller_state;
-    // get controller state
-    if(controller==0){
-        controller_state = GetControllerState1();
-    }else{
-        controller_state = GetControllerState2();
-    }
-    // if no button is pressed, reset counter
-    if(controller_state.raw == 0){
-        buttonTimes[controller]=0;
-    // otherwise update counter
-    }else{
-        buttonTimes[controller]++;
-    }
+uint32_t buttons[2][12];
 
-    // if counter has reached the given number, reset counter and return true value
-    if(buttonTimes[controller]==count){
-        buttonTimes[controller]=0;
-        return 1;
-    // otherwise just return false value
+uint32_t buttonPressedTime(snes_button_state_t controller_state, uint32_t button, uint32_t pushtime, uint32_t timer){
+    if((controller_state.raw & (1 << button))){
+        if(pushtime>timers[timer]){
+            timers[timer]=0;
+            return 1;
+        }else{
+            return 0;
+        }
     }else{
+        timers[timer]=0;
         return 0;
     }
 }
 
 void Init(struct Gamestate* state)
 {
+    for(uint32_t timer=0;timer<timers_count;timer++){
+        timers[0]=0;
+    }
 }
 
 void OnEnter(struct Gamestate* state)
@@ -64,33 +59,16 @@ void OnLeave(struct Gamestate* state)
 {
 }
 
-int spider_anim=1;
+uint32_t spider_anim=1;
 
-int sprite=1;
+uint32_t sprite=1;
 
-int direction=2;
+uint32_t direction=2;
 
-void Update(uint32_t a)
-{
-    delay[0]=delay[0]+a;
-    delay[1]=delay[1]+a;
-    delay[2]=delay[2]+a;
-
-    snes_button_state_t controller_state = GetControllerState1();
-
-    direction=new_direction();
-    move_spider(direction,a);
-
-    if(x<-8) x=320+x;
-    if(y<-8) y=200+y;
-    if(x>312) x=-8;
-    if(y>192) y=-8;
-}
-
-int new_direction(snes_button_state_t controller_state){
-    int newdirection=direction;
-    if(controller_state.buttons.Left==1 || controller_state.buttons.A){
-        newdirection=(newdirection-1) % 12;
+uint32_t new_direction(snes_button_state_t controller_state){
+    uint32_t newdirection=direction;
+    if(controller_state.buttons.Left==1){
+        newdirection=(newdirection-1) % 8;
     }
     if(controller_state.buttons.Right==1 || controller_state.buttons.B){
         newdirection=(newdirection+1) % 12;
@@ -105,90 +83,23 @@ void move_spider(uint32_t direction,uint32_t a){
         delay[0]=0;
     }
 
-	if(delay[3] > 4){
-	delay[3] = 0;
-
-
-	
-	switch(direction){
-
-	case 0:
-		{
-			x +=3;
-			break;
-		}
-	case 1:
-		{
-			x +=2;
-			y +=1;
-			break;
-		}
-	case 2:
-		{
-			x +=1;
-			y +=2;
-			break;
-		}	
-	case 3:
-		{
-			y +=3;
-			break;
-		}	
-	case 4:
-		{
-			x -=1;
-			y +=2;
-			break;
-		}	
-	case 5:
-		{
-			x -=2;
-			y +=1;
-			break;
-		}	
-	case 6:
-		{
-			x -=3;
-			break;
-		}
-	case 7:
-		{
-			x -=2;
-			y -=1;
-			break;
-		}
-	
-	case 8:
-		{
-			x -=1;
-			y -=2;
-			break;
-		}
-
-	case 9:
-		{
-			y -=3;
-			break;
-		}
-	
-
-	case 10:
-		{
-			y -=2;
-			x +=1;
-			break;
-		}
-
-
-	case 11:
-		{
-			y -=1;
-			x += 2;
-			break;
-		}		
-	}
-
-	}
+    if(delay[3] > 4){
+        delay[3] = 0;
+        switch(direction){
+            case 0: x+=3; break;
+            case 1: x +=2; y +=1; break;
+            case 2: x +=1; y +=2; break;
+            case 3: y +=3; break;
+            case 4: x -=1; y +=2; break;
+            case 5: x -=2; y +=1; break;
+            case 6: x -=3; break;
+            case 7: x -=2; y-=1; break;
+            case 8: x -=1; y -=2; break;
+            case 9: y -=3; break;
+            case 10: y -=2; x +=1; break;
+            case 11: y-=1; x+=2; break;
+        }
+    }
 }
 
 const RLEBitmap* const spider_thing(){
@@ -201,11 +112,30 @@ const RLEBitmap* const spider_thing(){
     }
 }
 
+void Update(uint32_t a)
+{
+    for(uint32_t timer=0;timer<timers_count;timer++){
+        timers[0]=timers[0]+a;
+    }
+
+    snes_button_state_t controller_state = GetControllerState1();
+
+    if(buttonPressedTime(controller_state,0,10,2)){
+        direction=new_direction(controller_state);
+    }
+    move_spider(direction,a);
+
+    if(x<-8) x=320+x;
+    if(y<-8) y=200+y;
+    if(x>312) x=-8;
+    if(y>192) y=-8;
+}
+
 void Draw(Bitmap *b)
 {
     ClearBitmap(b);
     DrawFilledRectangle(b, 0, 0, 320, 200, RGB(255,255,255));
-	
+    
     if(x<0 && y>0 && y<=184){
         // rand links
         DrawRLEBitmap(b, spider_thing(), 320+x, y); // rechter rand
