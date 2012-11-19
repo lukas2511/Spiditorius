@@ -22,7 +22,7 @@ Game* TheGame = &(Game) {&InitState};
 int x=280;
 int y=5;
 
-uint32_t delay[3]={0,0,0};
+uint32_t delay[4]={0,0,0, 0};
 
 int buttonTimes[2];
 
@@ -89,21 +89,27 @@ void Update(uint32_t a)
 
 int new_direction(snes_button_state_t controller_state){
     int newdirection=direction;
-    if(controller_state.buttons.Left==1){
-        newdirection=(newdirection-1) % 8;
+    if(controller_state.buttons.Left==1 || controller_state.buttons.A){
+        newdirection=(newdirection-1) % 12;
     }
-    if(controller_state.buttons.Right==1){
-        newdirection=(newdirection+1) % 8;
+    if(controller_state.buttons.Right==1 || controller_state.buttons.B){
+        newdirection=(newdirection+1) % 12;
     }
     if(newdirection==-1) newdirection=7;
     return newdirection;
 }
 
-void move_spider(int direction,uint32_t a){
+void move_spider(uint32_t direction,uint32_t a){
     if(delay[0]>10){
         spider_anim++;
         delay[0]=0;
     }
+
+	if(delay[3] > 4){
+	delay[3] = 0;
+
+
+	
 	switch(direction){
 
 	case 0:
@@ -180,6 +186,8 @@ void move_spider(int direction,uint32_t a){
 			x += 2;
 			break;
 		}		
+	}
+
 	}
 }
 
