@@ -22,6 +22,7 @@ Game* TheGame = &(Game) {&InitState};
 int x=280;
 int y=5;
 
+uint32_t delay[3]={0,0,0};
 
 int buttonTimes[2];
 
@@ -51,7 +52,6 @@ int buttonPressedCountStuff(int controller, int count){
     }
 }
 
-
 void Init(struct Gamestate* state)
 {
 }
@@ -68,38 +68,53 @@ int spider_anim=1;
 
 int sprite=1;
 
+int direction=2;
+
 void Update(uint32_t a)
 {
-    if(buttonPressedCountStuff(0, 2)){
+    delay[0]=delay[0]+a;
+    delay[1]=delay[1]+a;
+    delay[2]=delay[2]+a;
 
     snes_button_state_t controller_state = GetControllerState1();
 
-    if(controller_state.buttons.Up){
-        y--;
-        sprite=1;
-    }
-    if(controller_state.buttons.Down){
-        y++;
-        sprite=2;
-    }
-    if(controller_state.buttons.Left){
-        x--;
-        sprite=3;
-    }
-    if(controller_state.buttons.Right){
-        x++;
-        sprite=4;
-    }
-    spider_anim++;
+    direction=new_direction();
+    move_spider(direction,a);
 
     if(x<-8) x=320+x;
     if(y<-8) y=200+y;
     if(x>312) x=-8;
     if(y>192) y=-8;
-
-    }
 }
 
+int new_direction(snes_button_state_t controller_state){
+    int newdirection=direction;
+    if(controller_state.buttons.Left==1){
+        newdirection=(newdirection-1) % 8;
+    }
+    if(controller_state.buttons.Right==1){
+        newdirection=(newdirection+1) % 8;
+    }
+    if(newdirection==-1) newdirection=7;
+    return newdirection;
+}
+
+void move_spider(int direction,uint32_t a){
+    if(delay[0]>10){
+        spider_anim++;
+        delay[0]=0;
+    }
+    switch(direction){
+        case 0: sprite=1; y--; break; // up
+        case 1: sprite=1; x++; y--; break; // up right
+        case 2: sprite=4; x++; break; // right
+        case 3: sprite=2; x++; y++; break; // down right
+        case 4: sprite=2; y++; break; // down
+        case 5: sprite=2; y++; x--; break; // down left
+        case 6: sprite=3; x--; break; // left
+        case 7: sprite=1; x--; y--; break; // up left
+    }
+}
 
 const RLEBitmap* const spider_thing(){
     switch(spider_anim){
