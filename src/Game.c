@@ -3,8 +3,10 @@
 #include <game/Filesystem.h>
 #include <game/Accelerometer.h>
 #include <game/Font.h>
+#include <Collision.h>
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <stm32f4xx/stm32f4xx_rng.h>
 #include <math.h>
@@ -36,7 +38,8 @@ uint32_t buttonsPressedTime(snes_button_state_t controller_state, uint32_t pusht
         return 0;
     }else{
         if(controller_state.raw == last_button_state){
-            if(pushtime<timers[timer]){
+            if( timers[timer] > pushtime){
+                timers[timer] = 0;                
                 return 1;
             }else{
                 return 0;
@@ -72,16 +75,17 @@ uint32_t direction=2;
 uint32_t new_direction(snes_button_state_t controller_state){
     uint32_t newdirection=direction;
     if(controller_state.buttons.Left || controller_state.buttons.A){
-        newdirection=(newdirection-1) % 12;
+        if(direction == 0) newdirection = 11;
+        else newdirection--;
     }
     if(controller_state.buttons.Right || controller_state.buttons.B){
-        newdirection=(newdirection+1) % 12;
+        if(direction == 11) newdirection = 0;
+        else newdirection++;
     }
-    if(newdirection==-1) newdirection=7;
     return newdirection;
 }
 
-void move_spider(uint32_t direction,uint32_t a){
+void move_spider(uint32_t direction){
     if(timers[0]>10){
         spider_anim++;
         timers[0]=0;
@@ -127,7 +131,7 @@ void Update(uint32_t a)
     if(buttonsPressedTime(controller_state,10,2)){
         direction=new_direction(controller_state);
     }
-    move_spider(direction,a);
+    move_spider(direction);
 
     if(x<-8) x=320+x;
     if(y<-8) y=200+y;
@@ -173,6 +177,7 @@ void Draw(Bitmap *b)
         DrawRLEBitmap(b, spider_thing(), x, -(200-y)); // oben links;
         DrawRLEBitmap(b, spider_thing(), 320+x, -(200-y)); // oben rechts;
     }
+
 
     if(spider_anim>4) spider_anim=1;
 
