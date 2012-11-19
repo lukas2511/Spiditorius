@@ -104,16 +104,83 @@ void move_spider(int direction,uint32_t a){
         spider_anim++;
         delay[0]=0;
     }
-    switch(direction){
-        case 0: sprite=1; y--; break; // up
-        case 1: sprite=1; x++; y--; break; // up right
-        case 2: sprite=4; x++; break; // right
-        case 3: sprite=2; x++; y++; break; // down right
-        case 4: sprite=2; y++; break; // down
-        case 5: sprite=2; y++; x--; break; // down left
-        case 6: sprite=3; x--; break; // left
-        case 7: sprite=1; x--; y--; break; // up left
-    }
+	switch(direction){
+
+	case 0:
+		{
+			x +=3;
+			break;
+		}
+	case 1:
+		{
+			x +=2;
+			y +=1;
+			break;
+		}
+	case 2:
+		{
+			x +=1;
+			y +=2;
+			break;
+		}	
+	case 3:
+		{
+			y +=3;
+			break;
+		}	
+	case 4:
+		{
+			x -=1;
+			y +=2;
+			break;
+		}	
+	case 5:
+		{
+			x -=2;
+			y +=1;
+			break;
+		}	
+	case 6:
+		{
+			x -=3;
+			break;
+		}
+	case 7:
+		{
+			x -=2;
+			y -=1;
+			break;
+		}
+	
+	case 8:
+		{
+			x -=1;
+			y -=2;
+			break;
+		}
+
+	case 9:
+		{
+			y -=3;
+			break;
+		}
+	
+
+	case 10:
+		{
+			y -=2;
+			x +=1;
+			break;
+		}
+
+
+	case 11:
+		{
+			y -=1;
+			x += 2;
+			break;
+		}		
+	}
 }
 
 const RLEBitmap* const spider_thing(){
