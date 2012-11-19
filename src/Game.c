@@ -31,16 +31,20 @@ uint32_t buttonTimes[2];
 uint32_t last_button_state=0;
 
 uint32_t buttonsPressedTime(snes_button_state_t controller_state, uint32_t pushtime, uint32_t timer){
-    if(controller_state.raw != last_button_state){
-        if(pushtime>timers[timer]){
-            timers[timer]=0;
-            return 1;
-        }else{
-            return 0;
-        }
-    }else{
+    if(controller_state.raw == 0){
         timers[timer]=0;
         return 0;
+    }else{
+        if(controller_state.raw == last_button_state){
+            if(pushtime<timers[timer]){
+                return 1;
+            }else{
+                return 0;
+            }
+        }else{
+            last_button_state = controller_state.raw;
+            return 0;
+        }
     }
 }
 
