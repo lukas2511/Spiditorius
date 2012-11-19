@@ -30,7 +30,7 @@ uint32_t buttonTimes[2];
 
 uint32_t buttons[2][12];
 
-uint32_t buttonPressedTime(snes_button_state_t controller_state, uint32_t button, uint32_t pushtime, uint32_t timer){
+uint32_t buttonsPressedTime(snes_button_state_t controller_state, uint32_t button, uint32_t pushtime, uint32_t timer){
     if((controller_state.raw & (1 << button))){
         if(pushtime>timers[timer]){
             timers[timer]=0;
@@ -67,10 +67,10 @@ uint32_t direction=2;
 
 uint32_t new_direction(snes_button_state_t controller_state){
     uint32_t newdirection=direction;
-    if(controller_state.buttons.Left==1){
+    if(controller_state.buttons.Left || controller_state.buttons.B){
         newdirection=(newdirection-1) % 8;
     }
-    if(controller_state.buttons.Right==1 || controller_state.buttons.B){
+    if(controller_state.buttons.Right || controller_state.buttons.B){
         newdirection=(newdirection+1) % 12;
     }
     if(newdirection==-1) newdirection=7;
@@ -78,13 +78,13 @@ uint32_t new_direction(snes_button_state_t controller_state){
 }
 
 void move_spider(uint32_t direction,uint32_t a){
-    if(delay[0]>10){
+    if(timers[0]>10){
         spider_anim++;
-        delay[0]=0;
+        timers[0]=0;
     }
 
-    if(delay[3] > 4){
-        delay[3] = 0;
+    if(timers[3] > 4){
+        timers[3] = 0;
         switch(direction){
             case 0: x+=3; break;
             case 1: x +=2; y +=1; break;
