@@ -30,7 +30,7 @@ uint32_t buttonTimes[2];
 
 uint32_t buttons[2][12];
 
-uint32_t buttonsPressedTime(snes_button_state_t controller_state, uint32_t button, uint32_t pushtime, uint32_t timer){
+uint32_t buttonsPressedTime(snes_button_state_t controller_state, uint32_t pushtime, uint32_t timer){
     if((controller_state.raw & (1 << button))){
         if(pushtime>timers[timer]){
             timers[timer]=0;
@@ -67,8 +67,8 @@ uint32_t direction=2;
 
 uint32_t new_direction(snes_button_state_t controller_state){
     uint32_t newdirection=direction;
-    if(controller_state.buttons.Left || controller_state.buttons.B){
-        newdirection=(newdirection-1) % 8;
+    if(controller_state.buttons.Left || controller_state.buttons.A){
+        newdirection=(newdirection-1) % 12;
     }
     if(controller_state.buttons.Right || controller_state.buttons.B){
         newdirection=(newdirection+1) % 12;
@@ -115,12 +115,12 @@ const RLEBitmap* const spider_thing(){
 void Update(uint32_t a)
 {
     for(uint32_t timer=0;timer<timers_count;timer++){
-        timers[0]=timers[0]+a;
+        timers[timer]=timers[timer]+a;
     }
 
     snes_button_state_t controller_state = GetControllerState1();
 
-    if(buttonPressedTime(controller_state,0,10,2)){
+    if(buttonsPressedTime(controller_state,10,2)){
         direction=new_direction(controller_state);
     }
     move_spider(direction,a);
