@@ -140,6 +140,9 @@ void move_spider(uint32_t direction){
 }
 
 void colltest(){
+
+    //in bearbeitung!!!!!!!!!!!!!
+
     //collision spider enim;
     for(int i = 0; i < enim_count; i++){
         if(Collision_Sprite_Sprite(enim_pos_x[i], enim_pos_y[i], enim_sprite[i], x, y, spider_thing() ))
