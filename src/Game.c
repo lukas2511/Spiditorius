@@ -20,6 +20,7 @@ void OnEnter(struct Gamestate* state);
 void OnLeave(struct Gamestate* state);
 void Update(uint32_t);
 void Draw(Bitmap *);
+void enim_add();
 
 Gamestate InitState = { Init, OnEnter, OnLeave, Update, Draw };
 Game* TheGame = &(Game) {&InitState};
@@ -67,6 +68,7 @@ void Init(struct Gamestate* state)
         timers[0]=0;
     }
     GetRandomInteger();
+    enim_count = 0;
 }
 
 void OnEnter(struct Gamestate* state)
@@ -153,6 +155,13 @@ void Update(uint32_t a)
     if(y<-8) y=200+y;
     if(x>312) x=-8;
     if(y>192) y=-8;
+}
+
+void enim_add(){
+    enim_pos_x[enim_count] = GetRandomInteger() % 320;
+    enim_pos_y[enim_count] = GetRandomInteger() % 200;
+    enim_dir[enim_count] = GetRandomInteger() % 16;
+    enim_count++;
 }
 
 void Draw(Bitmap *b)
