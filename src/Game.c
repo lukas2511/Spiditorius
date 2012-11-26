@@ -26,6 +26,8 @@ inline void food_add();
 void colltest();
 void GameOver();
 
+RLEBitmap const* spider_thing();
+
 Gamestate InitState = { Init, OnEnter, OnLeave, Update, Draw };
 Game* TheGame = &(Game) {&InitState};
 
@@ -47,6 +49,8 @@ uint32_t food_x;
 uint32_t food_y;
 
 uint32_t points;
+
+RLEBitmap* enim_sprite[10];
 
 
 
@@ -136,7 +140,15 @@ void move_spider(uint32_t direction){
 }
 
 void colltest(){
+    //collision spider enim;
+    for(int i = 0; i < enim_count; i++){
+        if(Collision_Sprite_Sprite(enim_pos_x[i], enim_pos_y[i], enim_sprite[i], x, y, spider_thing() ))
+            {
+                GameOver();
+            }      
 
+    }
+    
 
 
 
