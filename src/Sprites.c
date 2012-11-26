@@ -1,7 +1,7 @@
 #include <RLEBitmap.h>
 
-const struct { RLEBitmap rle; Pixel codes[RLECodeCount(70,26,16)]; } spider_d_anim_1=
-{
+const RLEBitmap * const spider=
+(const RLEBitmap *)&(const struct { RLEBitmap rle; Pixel codes[RLECodeCount(70,26,16)]; }){
 	{ 16,16 },
 	{
 		RLEEndCode(0x10),   RLEEndCode(0x10),   RLECode(0x06,0x04), RGB(0x00,0x00,0x00),
@@ -35,8 +35,43 @@ const struct { RLEBitmap rle; Pixel codes[RLECodeCount(70,26,16)]; } spider_d_an
 	}
 };
 
-const struct { RLEBitmap rle; Pixel codes[RLECodeCount(70,25,16)]; } spider_d_anim_2=
-{
+const RLEBitmap * const spider_d_anim_1=
+(const RLEBitmap *)&(const struct { RLEBitmap rle; Pixel codes[RLECodeCount(70,26,16)]; }){
+	{ 16,16 },
+	{
+		RLEEndCode(0x10),   RLEEndCode(0x10),   RLECode(0x06,0x04), RGB(0x00,0x00,0x00),
+		RGB(0x00,0x00,0x00),RGB(0x00,0x00,0x00),RGB(0x00,0x00,0x00),RLEEndCode(0x06),   
+		RLECode(0x06,0x04), RGB(0x00,0x00,0x00),RGB(0x7f,0x7f,0x7f),RGB(0x7f,0x7f,0x7f),
+		RGB(0x00,0x00,0x00),RLEEndCode(0x06),   RLECode(0x03,0x0a), RGB(0x00,0x00,0x00),
+		RGB(0x00,0x00,0x00),RGB(0x00,0x00,0x00),RGB(0x7f,0x7f,0x7f),RGB(0x7f,0x7f,0x7f),
+		RGB(0x7f,0x7f,0x7f),RGB(0x7f,0x7f,0x7f),RGB(0x00,0x00,0x00),RGB(0x00,0x00,0x00),
+		RGB(0x00,0x00,0x00),RLEEndCode(0x03),   RLECode(0x02,0x01), RGB(0x00,0x00,0x00),
+		RLECode(0x02,0x06), RGB(0x00,0x00,0x00),RGB(0x00,0x00,0x00),RGB(0x7f,0x7f,0x7f),
+		RGB(0x7f,0x7f,0x7f),RGB(0x00,0x00,0x00),RGB(0x00,0x00,0x00),RLECode(0x02,0x01), 
+		RGB(0x00,0x00,0x00),RLEEndCode(0x02),   RLECode(0x03,0x0a), RGB(0x00,0x00,0x00),
+		RGB(0x00,0x00,0x00),RGB(0x00,0x00,0x00),RGB(0x00,0x00,0x00),RGB(0x00,0x00,0x00),
+		RGB(0x00,0x00,0x00),RGB(0x00,0x00,0x00),RGB(0x00,0x00,0x00),RGB(0x00,0x00,0x00),
+		RGB(0x00,0x00,0x00),RLEEndCode(0x03),   RLECode(0x02,0x01), RGB(0x00,0x00,0x00),
+		RLECode(0x01,0x08), RGB(0x00,0x00,0x00),RGB(0x00,0x00,0x00),RGB(0x00,0x00,0x00),
+		RGB(0x00,0x00,0x00),RGB(0x00,0x00,0x00),RGB(0x00,0x00,0x00),RGB(0x00,0x00,0x00),
+		RGB(0x00,0x00,0x00),RLECode(0x01,0x01), RGB(0x00,0x00,0x00),RLEEndCode(0x02),   
+		RLECode(0x03,0x01), RGB(0x00,0x00,0x00),RLECode(0x02,0x04), RGB(0x00,0x00,0x00),
+		RGB(0x00,0x00,0x00),RGB(0x00,0x00,0x00),RGB(0x00,0x00,0x00),RLECode(0x02,0x01), 
+		RGB(0x00,0x00,0x00),RLEEndCode(0x03),   RLECode(0x02,0x01), RGB(0x00,0x00,0x00),
+		RLECode(0x02,0x06), RGB(0x00,0x00,0x00),RGB(0x00,0x00,0x00),RGB(0x00,0x00,0x00),
+		RGB(0x00,0x00,0x00),RGB(0x00,0x00,0x00),RGB(0x00,0x00,0x00),RLECode(0x02,0x01), 
+		RGB(0x00,0x00,0x00),RLEEndCode(0x02),   RLECode(0x04,0x01), RGB(0x00,0x00,0x00),
+		RLECode(0x01,0x01), RGB(0x00,0x00,0x00),RLECode(0x02,0x01), RGB(0x00,0x00,0x00),
+		RLECode(0x01,0x01), RGB(0x00,0x00,0x00),RLEEndCode(0x04),   RLECode(0x03,0x01), 
+		RGB(0x00,0x00,0x00),RLECode(0x08,0x01), RGB(0x00,0x00,0x00),RLEEndCode(0x03),   
+		RLECode(0x04,0x01), RGB(0x00,0x00,0x00),RLECode(0x06,0x01), RGB(0x00,0x00,0x00),
+		RLEEndCode(0x04),   RLECode(0x05,0x01), RGB(0x00,0x00,0x00),RLECode(0x04,0x01), 
+		RGB(0x00,0x00,0x00),RLEEndCode(0x05),   RLEEndCode(0x10),   RLEEndCode(0x10),   
+	}
+};
+
+const RLEBitmap * const spider_d_anim_2=
+(const RLEBitmap *)&(const struct { RLEBitmap rle; Pixel codes[RLECodeCount(70,25,16)]; }){
 	{ 16,16 },
 	{
 		RLEEndCode(0x10),   RLEEndCode(0x10),   RLECode(0x06,0x04), RGB(0x00,0x00,0x00),
@@ -70,8 +105,8 @@ const struct { RLEBitmap rle; Pixel codes[RLECodeCount(70,25,16)]; } spider_d_an
 	}
 };
 
-const struct { RLEBitmap rle; Pixel codes[RLECodeCount(70,26,16)]; } spider_d_anim_3=
-{
+const RLEBitmap * const spider_d_anim_3=
+(const RLEBitmap *)&(const struct { RLEBitmap rle; Pixel codes[RLECodeCount(70,26,16)]; }){
 	{ 16,16 },
 	{
 		RLEEndCode(0x10),   RLEEndCode(0x10),   RLECode(0x06,0x04), RGB(0x00,0x00,0x00),
@@ -105,8 +140,8 @@ const struct { RLEBitmap rle; Pixel codes[RLECodeCount(70,26,16)]; } spider_d_an
 	}
 };
 
-const struct { RLEBitmap rle; Pixel codes[RLECodeCount(70,25,16)]; } spider_d_anim_4=
-{
+const RLEBitmap * const spider_d_anim_4=
+(const RLEBitmap *)&(const struct { RLEBitmap rle; Pixel codes[RLECodeCount(70,25,16)]; }){
 	{ 16,16 },
 	{
 		RLEEndCode(0x10),   RLEEndCode(0x10),   RLECode(0x06,0x04), RGB(0x00,0x00,0x00),
@@ -140,8 +175,8 @@ const struct { RLEBitmap rle; Pixel codes[RLECodeCount(70,25,16)]; } spider_d_an
 	}
 };
 
-const struct { RLEBitmap rle; Pixel codes[RLECodeCount(70,32,16)]; } spider_l_anim_1=
-{
+const RLEBitmap * const spider_l_anim_1=
+(const RLEBitmap *)&(const struct { RLEBitmap rle; Pixel codes[RLECodeCount(70,32,16)]; }){
 	{ 16,16 },
 	{
 		RLEEndCode(0x10),   RLEEndCode(0x10),   RLECode(0x06,0x01), RGB(0x00,0x00,0x00),
@@ -177,8 +212,8 @@ const struct { RLEBitmap rle; Pixel codes[RLECodeCount(70,32,16)]; } spider_l_an
 	}
 };
 
-const struct { RLEBitmap rle; Pixel codes[RLECodeCount(70,33,16)]; } spider_l_anim_2=
-{
+const RLEBitmap * const spider_l_anim_2=
+(const RLEBitmap *)&(const struct { RLEBitmap rle; Pixel codes[RLECodeCount(70,33,16)]; }){
 	{ 16,16 },
 	{
 		RLEEndCode(0x10),   RLEEndCode(0x10),   RLECode(0x06,0x01), RGB(0x00,0x00,0x00),
@@ -214,8 +249,8 @@ const struct { RLEBitmap rle; Pixel codes[RLECodeCount(70,33,16)]; } spider_l_an
 	}
 };
 
-const struct { RLEBitmap rle; Pixel codes[RLECodeCount(70,32,16)]; } spider_l_anim_3=
-{
+const RLEBitmap * const spider_l_anim_3=
+(const RLEBitmap *)&(const struct { RLEBitmap rle; Pixel codes[RLECodeCount(70,32,16)]; }){
 	{ 16,16 },
 	{
 		RLEEndCode(0x10),   RLEEndCode(0x10),   RLECode(0x06,0x01), RGB(0x00,0x00,0x00),
@@ -251,8 +286,8 @@ const struct { RLEBitmap rle; Pixel codes[RLECodeCount(70,32,16)]; } spider_l_an
 	}
 };
 
-const struct { RLEBitmap rle; Pixel codes[RLECodeCount(70,33,16)]; } spider_l_anim_4=
-{
+const RLEBitmap * const spider_l_anim_4=
+(const RLEBitmap *)&(const struct { RLEBitmap rle; Pixel codes[RLECodeCount(70,33,16)]; }){
 	{ 16,16 },
 	{
 		RLEEndCode(0x10),   RLEEndCode(0x10),   RLECode(0x08,0x01), RGB(0x00,0x00,0x00),
@@ -288,43 +323,8 @@ const struct { RLEBitmap rle; Pixel codes[RLECodeCount(70,33,16)]; } spider_l_an
 	}
 };
 
-const struct { RLEBitmap rle; Pixel codes[RLECodeCount(70,26,16)]; } spider=
-{
-	{ 16,16 },
-	{
-		RLEEndCode(0x10),   RLEEndCode(0x10),   RLECode(0x06,0x04), RGB(0x00,0x00,0x00),
-		RGB(0x00,0x00,0x00),RGB(0x00,0x00,0x00),RGB(0x00,0x00,0x00),RLEEndCode(0x06),   
-		RLECode(0x06,0x04), RGB(0x00,0x00,0x00),RGB(0x7f,0x7f,0x7f),RGB(0x7f,0x7f,0x7f),
-		RGB(0x00,0x00,0x00),RLEEndCode(0x06),   RLECode(0x03,0x0a), RGB(0x00,0x00,0x00),
-		RGB(0x00,0x00,0x00),RGB(0x00,0x00,0x00),RGB(0x7f,0x7f,0x7f),RGB(0x7f,0x7f,0x7f),
-		RGB(0x7f,0x7f,0x7f),RGB(0x7f,0x7f,0x7f),RGB(0x00,0x00,0x00),RGB(0x00,0x00,0x00),
-		RGB(0x00,0x00,0x00),RLEEndCode(0x03),   RLECode(0x02,0x01), RGB(0x00,0x00,0x00),
-		RLECode(0x02,0x06), RGB(0x00,0x00,0x00),RGB(0x00,0x00,0x00),RGB(0x7f,0x7f,0x7f),
-		RGB(0x7f,0x7f,0x7f),RGB(0x00,0x00,0x00),RGB(0x00,0x00,0x00),RLECode(0x02,0x01), 
-		RGB(0x00,0x00,0x00),RLEEndCode(0x02),   RLECode(0x03,0x0a), RGB(0x00,0x00,0x00),
-		RGB(0x00,0x00,0x00),RGB(0x00,0x00,0x00),RGB(0x00,0x00,0x00),RGB(0x00,0x00,0x00),
-		RGB(0x00,0x00,0x00),RGB(0x00,0x00,0x00),RGB(0x00,0x00,0x00),RGB(0x00,0x00,0x00),
-		RGB(0x00,0x00,0x00),RLEEndCode(0x03),   RLECode(0x02,0x01), RGB(0x00,0x00,0x00),
-		RLECode(0x01,0x08), RGB(0x00,0x00,0x00),RGB(0x00,0x00,0x00),RGB(0x00,0x00,0x00),
-		RGB(0x00,0x00,0x00),RGB(0x00,0x00,0x00),RGB(0x00,0x00,0x00),RGB(0x00,0x00,0x00),
-		RGB(0x00,0x00,0x00),RLECode(0x01,0x01), RGB(0x00,0x00,0x00),RLEEndCode(0x02),   
-		RLECode(0x03,0x01), RGB(0x00,0x00,0x00),RLECode(0x02,0x04), RGB(0x00,0x00,0x00),
-		RGB(0x00,0x00,0x00),RGB(0x00,0x00,0x00),RGB(0x00,0x00,0x00),RLECode(0x02,0x01), 
-		RGB(0x00,0x00,0x00),RLEEndCode(0x03),   RLECode(0x02,0x01), RGB(0x00,0x00,0x00),
-		RLECode(0x02,0x06), RGB(0x00,0x00,0x00),RGB(0x00,0x00,0x00),RGB(0x00,0x00,0x00),
-		RGB(0x00,0x00,0x00),RGB(0x00,0x00,0x00),RGB(0x00,0x00,0x00),RLECode(0x02,0x01), 
-		RGB(0x00,0x00,0x00),RLEEndCode(0x02),   RLECode(0x04,0x01), RGB(0x00,0x00,0x00),
-		RLECode(0x01,0x01), RGB(0x00,0x00,0x00),RLECode(0x02,0x01), RGB(0x00,0x00,0x00),
-		RLECode(0x01,0x01), RGB(0x00,0x00,0x00),RLEEndCode(0x04),   RLECode(0x03,0x01), 
-		RGB(0x00,0x00,0x00),RLECode(0x08,0x01), RGB(0x00,0x00,0x00),RLEEndCode(0x03),   
-		RLECode(0x04,0x01), RGB(0x00,0x00,0x00),RLECode(0x06,0x01), RGB(0x00,0x00,0x00),
-		RLEEndCode(0x04),   RLECode(0x05,0x01), RGB(0x00,0x00,0x00),RLECode(0x04,0x01), 
-		RGB(0x00,0x00,0x00),RLEEndCode(0x05),   RLEEndCode(0x10),   RLEEndCode(0x10),   
-	}
-};
-
-const struct { RLEBitmap rle; Pixel codes[RLECodeCount(70,32,16)]; } spider_r_anim_1=
-{
+const RLEBitmap * const spider_r_anim_1=
+(const RLEBitmap *)&(const struct { RLEBitmap rle; Pixel codes[RLECodeCount(70,32,16)]; }){
 	{ 16,16 },
 	{
 		RLEEndCode(0x10),   RLEEndCode(0x10),   RLECode(0x05,0x01), RGB(0x00,0x00,0x00),
@@ -360,8 +360,8 @@ const struct { RLEBitmap rle; Pixel codes[RLECodeCount(70,32,16)]; } spider_r_an
 	}
 };
 
-const struct { RLEBitmap rle; Pixel codes[RLECodeCount(70,33,16)]; } spider_r_anim_2=
-{
+const RLEBitmap * const spider_r_anim_2=
+(const RLEBitmap *)&(const struct { RLEBitmap rle; Pixel codes[RLECodeCount(70,33,16)]; }){
 	{ 16,16 },
 	{
 		RLEEndCode(0x10),   RLEEndCode(0x10),   RLECode(0x03,0x01), RGB(0x00,0x00,0x00),
@@ -397,8 +397,8 @@ const struct { RLEBitmap rle; Pixel codes[RLECodeCount(70,33,16)]; } spider_r_an
 	}
 };
 
-const struct { RLEBitmap rle; Pixel codes[RLECodeCount(70,32,16)]; } spider_r_anim_3=
-{
+const RLEBitmap * const spider_r_anim_3=
+(const RLEBitmap *)&(const struct { RLEBitmap rle; Pixel codes[RLECodeCount(70,32,16)]; }){
 	{ 16,16 },
 	{
 		RLEEndCode(0x10),   RLEEndCode(0x10),   RLECode(0x05,0x01), RGB(0x00,0x00,0x00),
@@ -434,8 +434,8 @@ const struct { RLEBitmap rle; Pixel codes[RLECodeCount(70,32,16)]; } spider_r_an
 	}
 };
 
-const struct { RLEBitmap rle; Pixel codes[RLECodeCount(70,33,16)]; } spider_r_anim_4=
-{
+const RLEBitmap * const spider_r_anim_4=
+(const RLEBitmap *)&(const struct { RLEBitmap rle; Pixel codes[RLECodeCount(70,33,16)]; }){
 	{ 16,16 },
 	{
 		RLEEndCode(0x10),   RLEEndCode(0x10),   RLECode(0x05,0x01), RGB(0x00,0x00,0x00),
@@ -471,8 +471,8 @@ const struct { RLEBitmap rle; Pixel codes[RLECodeCount(70,33,16)]; } spider_r_an
 	}
 };
 
-const struct { RLEBitmap rle; Pixel codes[RLECodeCount(70,26,16)]; } spider_u_anim_1=
-{
+const RLEBitmap * const spider_u_anim_1=
+(const RLEBitmap *)&(const struct { RLEBitmap rle; Pixel codes[RLECodeCount(70,26,16)]; }){
 	{ 16,16 },
 	{
 		RLEEndCode(0x10),   RLEEndCode(0x10),   RLECode(0x05,0x01), RGB(0x00,0x00,0x00),
@@ -506,8 +506,8 @@ const struct { RLEBitmap rle; Pixel codes[RLECodeCount(70,26,16)]; } spider_u_an
 	}
 };
 
-const struct { RLEBitmap rle; Pixel codes[RLECodeCount(70,25,16)]; } spider_u_anim_2=
-{
+const RLEBitmap * const spider_u_anim_2=
+(const RLEBitmap *)&(const struct { RLEBitmap rle; Pixel codes[RLECodeCount(70,25,16)]; }){
 	{ 16,16 },
 	{
 		RLEEndCode(0x10),   RLEEndCode(0x10),   RLECode(0x0a,0x01), RGB(0x00,0x00,0x00),
@@ -541,8 +541,8 @@ const struct { RLEBitmap rle; Pixel codes[RLECodeCount(70,25,16)]; } spider_u_an
 	}
 };
 
-const struct { RLEBitmap rle; Pixel codes[RLECodeCount(70,26,16)]; } spider_u_anim_3=
-{
+const RLEBitmap * const spider_u_anim_3=
+(const RLEBitmap *)&(const struct { RLEBitmap rle; Pixel codes[RLECodeCount(70,26,16)]; }){
 	{ 16,16 },
 	{
 		RLEEndCode(0x10),   RLEEndCode(0x10),   RLECode(0x05,0x01), RGB(0x00,0x00,0x00),
@@ -576,8 +576,8 @@ const struct { RLEBitmap rle; Pixel codes[RLECodeCount(70,26,16)]; } spider_u_an
 	}
 };
 
-const struct { RLEBitmap rle; Pixel codes[RLECodeCount(70,25,16)]; } spider_u_anim_4=
-{
+const RLEBitmap * const spider_u_anim_4=
+(const RLEBitmap *)&(const struct { RLEBitmap rle; Pixel codes[RLECodeCount(70,25,16)]; }){
 	{ 16,16 },
 	{
 		RLEEndCode(0x10),   RLEEndCode(0x10),   RLECode(0x05,0x01), RGB(0x00,0x00,0x00),
@@ -611,8 +611,8 @@ const struct { RLEBitmap rle; Pixel codes[RLECodeCount(70,25,16)]; } spider_u_an
 	}
 };
 
-const struct { RLEBitmap rle; Pixel codes[RLECodeCount(58,12,16)]; } worm00=
-{
+const RLEBitmap * const worm00=
+(const RLEBitmap *)&(const struct { RLEBitmap rle; Pixel codes[RLECodeCount(58,12,16)]; }){
 	{ 16,16 },
 	{
 		RLEEndCode(0x10),   RLEEndCode(0x10),   RLECode(0x07,0x02), RGB(0x00,0x00,0x00),
@@ -640,8 +640,8 @@ const struct { RLEBitmap rle; Pixel codes[RLECodeCount(58,12,16)]; } worm00=
 	}
 };
 
-const struct { RLEBitmap rle; Pixel codes[RLECodeCount(70,12,16)]; } worm01=
-{
+const RLEBitmap * const worm01=
+(const RLEBitmap *)&(const struct { RLEBitmap rle; Pixel codes[RLECodeCount(70,12,16)]; }){
 	{ 16,16 },
 	{
 		RLEEndCode(0x10),   RLECode(0x09,0x02), RGB(0x00,0x00,0x00),RGB(0x00,0x00,0x00),
@@ -672,8 +672,8 @@ const struct { RLEBitmap rle; Pixel codes[RLECodeCount(70,12,16)]; } worm01=
 	}
 };
 
-const struct { RLEBitmap rle; Pixel codes[RLECodeCount(64,10,16)]; } worm02=
-{
+const RLEBitmap * const worm02=
+(const RLEBitmap *)&(const struct { RLEBitmap rle; Pixel codes[RLECodeCount(64,10,16)]; }){
 	{ 16,16 },
 	{
 		RLEEndCode(0x10),   RLEEndCode(0x10),   RLEEndCode(0x10),   RLECode(0x0a,0x03), 
@@ -702,8 +702,8 @@ const struct { RLEBitmap rle; Pixel codes[RLECodeCount(64,10,16)]; } worm02=
 	}
 };
 
-const struct { RLEBitmap rle; Pixel codes[RLECodeCount(70,9,16)]; } worm03=
-{
+const RLEBitmap * const worm03=
+(const RLEBitmap *)&(const struct { RLEBitmap rle; Pixel codes[RLECodeCount(70,9,16)]; }){
 	{ 16,16 },
 	{
 		RLEEndCode(0x10),   RLEEndCode(0x10),   RLEEndCode(0x10),   RLECode(0x09,0x04), 
@@ -733,8 +733,8 @@ const struct { RLEBitmap rle; Pixel codes[RLECodeCount(70,9,16)]; } worm03=
 	}
 };
 
-const struct { RLEBitmap rle; Pixel codes[RLECodeCount(58,6,16)]; } worm10=
-{
+const RLEBitmap * const worm10=
+(const RLEBitmap *)&(const struct { RLEBitmap rle; Pixel codes[RLECodeCount(58,6,16)]; }){
 	{ 16,16 },
 	{
 		RLEEndCode(0x10),   RLEEndCode(0x10),   RLEEndCode(0x10),   RLEEndCode(0x10),   
@@ -760,8 +760,8 @@ const struct { RLEBitmap rle; Pixel codes[RLECodeCount(58,6,16)]; } worm10=
 	}
 };
 
-const struct { RLEBitmap rle; Pixel codes[RLECodeCount(70,9,16)]; } worm11=
-{
+const RLEBitmap * const worm11=
+(const RLEBitmap *)&(const struct { RLEBitmap rle; Pixel codes[RLECodeCount(70,9,16)]; }){
 	{ 16,16 },
 	{
 		RLEEndCode(0x10),   RLEEndCode(0x10),   RLEEndCode(0x10),   RLEEndCode(0x10),   
@@ -791,8 +791,8 @@ const struct { RLEBitmap rle; Pixel codes[RLECodeCount(70,9,16)]; } worm11=
 	}
 };
 
-const struct { RLEBitmap rle; Pixel codes[RLECodeCount(62,17,16)]; } worm12=
-{
+const RLEBitmap * const worm12=
+(const RLEBitmap *)&(const struct { RLEBitmap rle; Pixel codes[RLECodeCount(62,17,16)]; }){
 	{ 16,16 },
 	{
 		RLEEndCode(0x10),   RLEEndCode(0x10),   RLEEndCode(0x10),   RLEEndCode(0x10),   
@@ -822,8 +822,8 @@ const struct { RLEBitmap rle; Pixel codes[RLECodeCount(62,17,16)]; } worm12=
 	}
 };
 
-const struct { RLEBitmap rle; Pixel codes[RLECodeCount(70,12,16)]; } worm13=
-{
+const RLEBitmap * const worm13=
+(const RLEBitmap *)&(const struct { RLEBitmap rle; Pixel codes[RLECodeCount(70,12,16)]; }){
 	{ 16,16 },
 	{
 		RLEEndCode(0x10),   RLEEndCode(0x10),   RLEEndCode(0x10),   RLECode(0x06,0x02), 
@@ -854,8 +854,8 @@ const struct { RLEBitmap rle; Pixel codes[RLECodeCount(70,12,16)]; } worm13=
 	}
 };
 
-const struct { RLEBitmap rle; Pixel codes[RLECodeCount(58,12,16)]; } worm20=
-{
+const RLEBitmap * const worm20=
+(const RLEBitmap *)&(const struct { RLEBitmap rle; Pixel codes[RLECodeCount(58,12,16)]; }){
 	{ 16,16 },
 	{
 		RLEEndCode(0x10),   RLEEndCode(0x10),   RLECode(0x07,0x02), RGB(0x00,0x00,0x00),
@@ -883,8 +883,8 @@ const struct { RLEBitmap rle; Pixel codes[RLECodeCount(58,12,16)]; } worm20=
 	}
 };
 
-const struct { RLEBitmap rle; Pixel codes[RLECodeCount(70,12,16)]; } worm21=
-{
+const RLEBitmap * const worm21=
+(const RLEBitmap *)&(const struct { RLEBitmap rle; Pixel codes[RLECodeCount(70,12,16)]; }){
 	{ 16,16 },
 	{
 		RLEEndCode(0x10),   RLEEndCode(0x10),   RLEEndCode(0x10),   RLECode(0x08,0x02), 
@@ -915,8 +915,8 @@ const struct { RLEBitmap rle; Pixel codes[RLECodeCount(70,12,16)]; } worm21=
 	}
 };
 
-const struct { RLEBitmap rle; Pixel codes[RLECodeCount(64,21,16)]; } worm22=
-{
+const RLEBitmap * const worm22=
+(const RLEBitmap *)&(const struct { RLEBitmap rle; Pixel codes[RLECodeCount(64,21,16)]; }){
 	{ 16,16 },
 	{
 		RLEEndCode(0x10),   RLEEndCode(0x10),   RLEEndCode(0x10),   RLECode(0x09,0x03), 
@@ -948,8 +948,8 @@ const struct { RLEBitmap rle; Pixel codes[RLECodeCount(64,21,16)]; } worm22=
 	}
 };
 
-const struct { RLEBitmap rle; Pixel codes[RLECodeCount(70,9,16)]; } worm23=
-{
+const RLEBitmap * const worm23=
+(const RLEBitmap *)&(const struct { RLEBitmap rle; Pixel codes[RLECodeCount(70,9,16)]; }){
 	{ 16,16 },
 	{
 		RLEEndCode(0x10),   RLEEndCode(0x10),   RLEEndCode(0x10),   RLEEndCode(0x10),   
@@ -979,8 +979,8 @@ const struct { RLEBitmap rle; Pixel codes[RLECodeCount(70,9,16)]; } worm23=
 	}
 };
 
-const struct { RLEBitmap rle; Pixel codes[RLECodeCount(58,6,16)]; } worm30=
-{
+const RLEBitmap * const worm30=
+(const RLEBitmap *)&(const struct { RLEBitmap rle; Pixel codes[RLECodeCount(58,6,16)]; }){
 	{ 16,16 },
 	{
 		RLEEndCode(0x10),   RLEEndCode(0x10),   RLEEndCode(0x10),   RLEEndCode(0x10),   
@@ -1006,8 +1006,8 @@ const struct { RLEBitmap rle; Pixel codes[RLECodeCount(58,6,16)]; } worm30=
 	}
 };
 
-const struct { RLEBitmap rle; Pixel codes[RLECodeCount(60,18,16)]; } worm31=
-{
+const RLEBitmap * const worm31=
+(const RLEBitmap *)&(const struct { RLEBitmap rle; Pixel codes[RLECodeCount(60,18,16)]; }){
 	{ 16,16 },
 	{
 		RLEEndCode(0x10),   RLEEndCode(0x10),   RLECode(0x05,0x03), RGB(0x06,0x00,0x00),
@@ -1037,8 +1037,8 @@ const struct { RLEBitmap rle; Pixel codes[RLECodeCount(60,18,16)]; } worm31=
 	}
 };
 
-const struct { RLEBitmap rle; Pixel codes[RLECodeCount(70,9,16)]; } worm32=
-{
+const RLEBitmap * const worm32=
+(const RLEBitmap *)&(const struct { RLEBitmap rle; Pixel codes[RLECodeCount(70,9,16)]; }){
 	{ 16,16 },
 	{
 		RLEEndCode(0x10),   RLEEndCode(0x10),   RLEEndCode(0x10),   RLECode(0x03,0x04), 
@@ -1068,8 +1068,8 @@ const struct { RLEBitmap rle; Pixel codes[RLECodeCount(70,9,16)]; } worm32=
 	}
 };
 
-const struct { RLEBitmap rle; Pixel codes[RLECodeCount(70,12,16)]; } worm33=
-{
+const RLEBitmap * const worm33=
+(const RLEBitmap *)&(const struct { RLEBitmap rle; Pixel codes[RLECodeCount(70,12,16)]; }){
 	{ 16,16 },
 	{
 		RLEEndCode(0x10),   RLECode(0x05,0x02), RGB(0x00,0x00,0x00),RGB(0x00,0x00,0x00),

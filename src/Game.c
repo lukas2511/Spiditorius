@@ -110,7 +110,7 @@ void move_spider(uint32_t direction){
     }
 }
 
-const RLEBitmap* const spider_thing(){
+const RLEBitmap const* spider_thing(){
     switch(spider_anim){
         case 1: return (sprite!=4) ? (sprite!=3) ? (sprite==2) ? spider_d_anim_1 : spider_u_anim_1 : spider_l_anim_1 : spider_r_anim_1;
         case 2: return (sprite!=4) ? (sprite!=3) ? (sprite==2) ? spider_d_anim_2 : spider_u_anim_2 : spider_l_anim_2 : spider_r_anim_2;
