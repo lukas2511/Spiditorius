@@ -20,7 +20,11 @@ void OnEnter(struct Gamestate* state);
 void OnLeave(struct Gamestate* state);
 void Update(uint32_t);
 void Draw(Bitmap *);
-void enim_add();
+inline void enim_add();
+inline void enim_move();
+inline void food_add();
+void colltest();
+void GameOver();
 
 Gamestate InitState = { Init, OnEnter, OnLeave, Update, Draw };
 Game* TheGame = &(Game) {&InitState};
@@ -38,6 +42,11 @@ uint32_t enim_pos_x[10];
 uint32_t enim_pos_y[10];
 uint32_t enim_dir[10];
 uint32_t enim_count;
+
+uint32_t food_x;
+uint32_t food_y;
+
+uint32_t points;
 
 
 
@@ -69,6 +78,7 @@ void Init(struct Gamestate* state)
     }
     GetRandomInteger();
     enim_count = 0;
+    points = 0;
 }
 
 void OnEnter(struct Gamestate* state)
@@ -78,6 +88,8 @@ void OnEnter(struct Gamestate* state)
 void OnLeave(struct Gamestate* state)
 {
 }
+
+
 
 uint32_t spider_anim=1;
 
@@ -123,6 +135,44 @@ void move_spider(uint32_t direction){
     }
 }
 
+void colltest(){
+
+
+
+
+}
+
+void enim_move(){
+    //timer passt tempo der gegner an. Auf das diese nicht ruckeln...
+    if(timers[5] > 6){
+        timers[5] = 0;
+    for(int i = 0; i < enim_count; i++){
+
+        switch(direction){
+            case 0: enim_pos_x[i]+=3; break;
+            case 1: enim_pos_x[i] +=2; enim_pos_y[i] +=1; break;
+            case 2: enim_pos_x[i] +=1; enim_pos_y[i] +=2; break;
+            case 3: enim_pos_y[i] +=3; break;
+            case 4: enim_pos_x[i] -=1; enim_pos_y[i] +=2; break;
+            case 5: enim_pos_x[i] -=2; enim_pos_y[i] +=1; break;
+            case 6: enim_pos_x[i] -=3; break;
+            case 7: enim_pos_x[i] -=2; enim_pos_y[i]-=1; break;
+            case 8: enim_pos_x[i] -=1; enim_pos_y[i] -=2; break;
+            case 9: enim_pos_y[i] -=3; break;
+            case 10: enim_pos_y[i] -=2; x +=1; break;
+            case 11: enim_pos_y[i]-=1; x+=2; break;
+        
+    }      
+    }
+
+
+    }
+
+
+
+
+}
+
 const RLEBitmap const* spider_thing(){
     switch(spider_anim){
         case 1: return (sprite!=4) ? (sprite!=3) ? (sprite==2) ? spider_d_anim_1 : spider_u_anim_1 : spider_l_anim_1 : spider_r_anim_1;
@@ -150,6 +200,7 @@ void Update(uint32_t a)
         direction=new_direction(controller_state);
     }
     move_spider(direction);
+    enim_move();
 
     if(x<-8) x=320+x;
     if(y<-8) y=200+y;
@@ -162,6 +213,11 @@ void enim_add(){
     enim_pos_y[enim_count] = GetRandomInteger() % 200;
     enim_dir[enim_count] = GetRandomInteger() % 16;
     enim_count++;
+}
+
+void food_add(){
+    food_x = GetRandomInteger() % 320;
+    food_y = GetRandomInteger() % 200;
 }
 
 void Draw(Bitmap *b)
