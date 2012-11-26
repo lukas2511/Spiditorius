@@ -4,6 +4,7 @@
 #include <game/Accelerometer.h>
 #include <game/Font.h>
 #include <Collision.h>
+#include <Random.h>
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -29,6 +30,15 @@ int y=5;
 uint32_t timers[timers_count];
 
 uint32_t buttonTimes[2];
+
+
+//gegner
+uint32_t enim_pos_x[10];
+uint32_t enim_pos_y[10];
+uint32_t enim_dir[10];
+uint32_t enim_count;
+
+
 
 uint32_t last_button_state=0;
 
@@ -56,6 +66,7 @@ void Init(struct Gamestate* state)
     for(uint32_t timer=0;timer<timers_count;timer++){
         timers[0]=0;
     }
+    GetRandomInteger();
 }
 
 void OnEnter(struct Gamestate* state)
