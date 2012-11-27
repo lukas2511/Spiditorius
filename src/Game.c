@@ -235,7 +235,7 @@ void food_add(){
     food_y = GetRandomInteger() % 200;
 }
 
-void draw_fix (const struct RLEBitmap * (*toDraw)(), Bitmap *b) {
+void draw_transition (const struct RLEBitmap * (*toDraw)(), Bitmap *b) {
 	if(x<0 && y>0 && y<=184){
         // rand links
         DrawRLEBitmap(b, (*toDraw)(), 320+x, y); // rechter rand
@@ -276,7 +276,7 @@ void Draw(Bitmap *b)
     ClearBitmap(b);
     DrawFilledRectangle(b, 0, 0, 320, 200, RGB(255,255,255));
     
-	draw_fix (&spider_thing, b);
+	draw_transition (&spider_thing, b);
 
     if(spider_anim>4) spider_anim=1;
 
