@@ -235,45 +235,48 @@ void food_add(){
     food_y = GetRandomInteger() % 200;
 }
 
+void draw_fix (const struct RLEBitmap * (*toDraw)(), Bitmap *b) {
+	if(x<0 && y>0 && y<=184){
+        // rand links
+        DrawRLEBitmap(b, (*toDraw)(), 320+x, y); // rechter rand
+    }else if(x<0 && y<0){
+        // ecke oben links
+        DrawRLEBitmap(b, (*toDraw)(), 320+x, y); // oben rechts
+        DrawRLEBitmap(b, (*toDraw)(), x, 200+y); // unten links
+        DrawRLEBitmap(b, (*toDraw)(), 320+x, 200+y); // unten rechts
+    }else if(y<0 && x>0 && x<=304){
+        // rand oben
+        DrawRLEBitmap(b, (*toDraw)(), x, 200+y); // rand unten
+    }else if(y<0 && x>304){
+        // ecke oben rechts
+        DrawRLEBitmap(b, (*toDraw)(), -(320-x), y); // oben links
+        DrawRLEBitmap(b, (*toDraw)(), x, 200+y); // unten rechts
+        DrawRLEBitmap(b, (*toDraw)(), -(320-x), 200+y); // unten links
+    }else if(x>304 && y>0 && y<=184){
+        // rand rechts
+        DrawRLEBitmap(b, (*toDraw)(), -(320-x), y); // rand links
+    }else if(x>304 && y>184){
+        // ecke unten rechts
+        DrawRLEBitmap(b, (*toDraw)(), -(320-x), y); // unten links
+        DrawRLEBitmap(b, (*toDraw)(), x, -(200-y)); // oben rechts
+        DrawRLEBitmap(b, (*toDraw)(), -(320-x), -(200-y)); // oben links
+    }else if(y>184 && x>0 && x<=304){
+        // rand unten
+        DrawRLEBitmap(b, (*toDraw)(), x, -(200-y)); // rand oben
+    }else if(x<0 && y>184){
+        // ecke unten links
+        DrawRLEBitmap(b, (*toDraw)(), 320+x, y); // unten rechts;
+        DrawRLEBitmap(b, (*toDraw)(), x, -(200-y)); // oben links;
+        DrawRLEBitmap(b, (*toDraw)(), 320+x, -(200-y)); // oben rechts;
+    }
+}
+
 void Draw(Bitmap *b)
 {
     ClearBitmap(b);
     DrawFilledRectangle(b, 0, 0, 320, 200, RGB(255,255,255));
     
-    if(x<0 && y>0 && y<=184){
-        // rand links
-        DrawRLEBitmap(b, spider_thing(), 320+x, y); // rechter rand
-    }else if(x<0 && y<0){
-        // ecke oben links
-        DrawRLEBitmap(b, spider_thing(), 320+x, y); // oben rechts
-        DrawRLEBitmap(b, spider_thing(), x, 200+y); // unten links
-        DrawRLEBitmap(b, spider_thing(), 320+x, 200+y); // unten rechts
-    }else if(y<0 && x>0 && x<=304){
-        // rand oben
-        DrawRLEBitmap(b, spider_thing(), x, 200+y); // rand unten
-    }else if(y<0 && x>304){
-        // ecke oben rechts
-        DrawRLEBitmap(b, spider_thing(), -(320-x), y); // oben links
-        DrawRLEBitmap(b, spider_thing(), x, 200+y); // unten rechts
-        DrawRLEBitmap(b, spider_thing(), -(320-x), 200+y); // unten links
-    }else if(x>304 && y>0 && y<=184){
-        // rand rechts
-        DrawRLEBitmap(b, spider_thing(), -(320-x), y); // rand links
-    }else if(x>304 && y>184){
-        // ecke unten rechts
-        DrawRLEBitmap(b, spider_thing(), -(320-x), y); // unten links
-        DrawRLEBitmap(b, spider_thing(), x, -(200-y)); // oben rechts
-        DrawRLEBitmap(b, spider_thing(), -(320-x), -(200-y)); // oben links
-    }else if(y>184 && x>0 && x<=304){
-        // rand unten
-        DrawRLEBitmap(b, spider_thing(), x, -(200-y)); // rand oben
-    }else if(x<0 && y>184){
-        // ecke unten links
-        DrawRLEBitmap(b, spider_thing(), 320+x, y); // unten rechts;
-        DrawRLEBitmap(b, spider_thing(), x, -(200-y)); // oben links;
-        DrawRLEBitmap(b, spider_thing(), 320+x, -(200-y)); // oben rechts;
-    }
-
+	draw_fix (&spider_thing, b);
 
     if(spider_anim>4) spider_anim=1;
 
