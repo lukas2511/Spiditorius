@@ -40,10 +40,10 @@ uint32_t buttonTimes[2];
 
 
 //gegner
-uint32_t enim_pos_x[10];
-uint32_t enim_pos_y[10];
+int enim_pos_x[10];
+int enim_pos_y[10];
 uint32_t enim_dir[10];
-uint32_t enim_count;
+uint32_t enim_count = 0;
 
 uint32_t food_x;
 uint32_t food_y;
@@ -52,7 +52,8 @@ uint32_t points;
 
 RLEBitmap* enim_sprite[10];
 
-
+//temp to add test enemys
+uint16_t enim_test = 3;
 
 uint32_t last_button_state=0;
 
@@ -198,6 +199,11 @@ const RLEBitmap const* spider_thing(){
     }
 }
 
+//temp
+const RLEBitmap const* enim_thing(){
+    return worm00;
+}
+
 void Update(uint32_t a)
 {
     for(uint32_t timer=0;timer<timers_count;timer++){
@@ -221,6 +227,8 @@ void Update(uint32_t a)
     if(y<-8) y=200+y;
     if(x>312) x=-8;
     if(y>192) y=-8;
+	
+	//if(enim_test) {enim_add(); enim_test--;}
 }
 
 void enim_add(){
@@ -278,6 +286,10 @@ void Draw(Bitmap *b)
     
 	draw_transition (&spider_thing, b, &x, &y);
 	
+	//for (int i = 0; i < enim_count; i++) {
+	//	draw_transition (&enim_thing, b, &(enim_pos_x[i]), &(enim_pos_y[i]));
+	//	DrawRLEBitmap(b, worm00, enim_pos_x[i], enim_pos_y[i]);
+	//}
 	
     if(spider_anim>4) spider_anim=1;
 
