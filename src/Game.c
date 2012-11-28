@@ -54,7 +54,7 @@ uint32_t points;
 RLEBitmap* enim_sprite[10];
 
 //temp to add test enemys
-uint16_t enim_test = 10;
+uint16_t enim_test = 1;
 
 uint32_t last_button_state=0;
 
@@ -247,10 +247,10 @@ const RLEBitmap const* enim_thing(){
 	
 	
 	switch (waspdir) {
-		case 3: return (spider_anim == 1 && spider_anim == 3) ? wasp_u0 : wasp_u1;
-		case 0: return (spider_anim == 1 && spider_anim == 3) ? wasp_r0 : wasp_r1;
-		case 1: return (spider_anim == 1 && spider_anim == 3) ? wasp_d0 : wasp_d1;
-		case 2: return (spider_anim == 1 && spider_anim == 3) ? wasp_l0 : wasp_l1;
+		case 3: return (spider_anim == 1 || spider_anim == 3) ? wasp_u0 : wasp_u1;
+		case 0: return (spider_anim == 2 || spider_anim == 4) ? wasp_r0 : wasp_r1;
+		case 1: return (spider_anim == 1 || spider_anim == 3) ? wasp_d0 : wasp_d1;
+		case 2: return (spider_anim == 2 || spider_anim == 4) ? wasp_l0 : wasp_l1;
 	}
 }
 
