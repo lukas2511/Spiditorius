@@ -43,6 +43,7 @@ uint32_t buttonTimes[2];
 int enim_pos_x[10];
 int enim_pos_y[10];
 uint32_t enim_dir[10];
+uint32_t enim_dir_lenght[10];
 uint32_t enim_count = 0;
 
 uint32_t food_x;
@@ -53,9 +54,11 @@ uint32_t points;
 RLEBitmap* enim_sprite[10];
 
 //temp to add test enemys
-uint16_t enim_test = 3;
+uint16_t enim_test = 1;
 
 uint32_t last_button_state=0;
+
+int glob_i;
 
 uint32_t buttonsPressedTime(snes_button_state_t controller_state, uint32_t pushtime, uint32_t timer){
     if(controller_state.raw == 0){
@@ -163,8 +166,13 @@ void enim_move(){
     if(timers[5] > 6){
         timers[5] = 0;
     for(int i = 0; i < enim_count; i++){
-
-        switch(direction){
+		
+		if (enim_dir_lenght[i] == 0) {
+			enim_dir[i] = GetRandomInteger() % 11;
+			enim_dir_lenght[i] = GetRandomInteger() % 16;
+		} else enim_dir_lenght[i]--;
+		
+        switch(enim_dir[i]){
             case 0: enim_pos_x[i]+=3; break;
             case 1: enim_pos_x[i] +=2; enim_pos_y[i] +=1; break;
             case 2: enim_pos_x[i] +=1; enim_pos_y[i] +=2; break;
@@ -175,8 +183,8 @@ void enim_move(){
             case 7: enim_pos_x[i] -=2; enim_pos_y[i]-=1; break;
             case 8: enim_pos_x[i] -=1; enim_pos_y[i] -=2; break;
             case 9: enim_pos_y[i] -=3; break;
-            case 10: enim_pos_y[i] -=2; x +=1; break;
-            case 11: enim_pos_y[i]-=1; x+=2; break;
+            case 10: enim_pos_y[i] -=2; enim_pos_y[i] +=1; break;
+            case 11: enim_pos_y[i]-=1; enim_pos_y[i] +=2; break;
         
     }      
     }
@@ -190,18 +198,60 @@ void enim_move(){
 }
 
 const RLEBitmap const* spider_thing(){
-    switch(spider_anim){
-        case 1: return (sprite!=4) ? (sprite!=3) ? (sprite==2) ? spider_d_anim_1 : spider_u_anim_1 : spider_l_anim_1 : spider_r_anim_1;
-        case 2: return (sprite!=4) ? (sprite!=3) ? (sprite==2) ? spider_d_anim_2 : spider_u_anim_2 : spider_l_anim_2 : spider_r_anim_2;
-        case 3: return (sprite!=4) ? (sprite!=3) ? (sprite==2) ? spider_d_anim_3 : spider_u_anim_3 : spider_l_anim_3 : spider_r_anim_3;
-        case 4: return (sprite!=4) ? (sprite!=3) ? (sprite==2) ? spider_d_anim_4 : spider_u_anim_4 : spider_l_anim_4 : spider_r_anim_4;
+	if (direction <= 1 || direction >= 11) sprite = 1;
+	if (direction <= 4 && direction >= 2) sprite = 2;
+	if (direction <= 7 && direction >= 5) sprite = 3;
+	if (direction <= 10 && direction >= 8) sprite = 4;
+    /*switch(spider_anim){
+        case 1: return (sprite==1) ? (sprite==2) ? (sprite==3) ? spider_d_anim_1 : spider_u_anim_1 : spider_l_anim_1 : spider_r_anim_1;
+        case 2: return (sprite==1) ? (sprite==2) ? (sprite==3) ? spider_d_anim_2 : spider_u_anim_2 : spider_l_anim_2 : spider_r_anim_2;
+        case 3: return (sprite==1) ? (sprite==2) ? (sprite==3) ? spider_d_anim_3 : spider_u_anim_3 : spider_l_anim_3 : spider_r_anim_3;
+        case 4: return (sprite==1) ? (sprite==2) ? (sprite==3) ? spider_d_anim_4 : spider_u_anim_4 : spider_l_anim_4 : spider_r_anim_4;
         default: return spider;
-    }
+    }*/
+	switch(sprite) {
+		case 1: switch(spider_anim) {
+			case 1: return spider_r_anim_1;
+			case 2: return spider_r_anim_2;
+			case 3: return spider_r_anim_3;
+			case 4: return spider_r_anim_4;
+		}; break;
+		case 2: switch(spider_anim) {
+			case 1: return spider_d_anim_1;
+			case 2: return spider_d_anim_2;
+			case 3: return spider_d_anim_3;
+			case 4: return spider_d_anim_4;
+		}; break;
+		case 3: switch(spider_anim) {
+			case 1: return spider_l_anim_1;
+			case 2: return spider_l_anim_2;
+			case 3: return spider_l_anim_3;
+			case 4: return spider_l_anim_4;
+		}; break;
+		case 4: switch(spider_anim) {
+			case 1: return spider_u_anim_1;
+			case 2: return spider_u_anim_2;
+			case 3: return spider_u_anim_3;
+			case 4: return spider_u_anim_4;
+		}; break;
+	}
 }
 
 //temp
 const RLEBitmap const* enim_thing(){
-    return wasp_u0;
+	uint8_t waspdir = 0;
+	if (enim_dir[glob_i] <= 1 || enim_dir[glob_i] >= 11) waspdir = 0;
+	if (enim_dir[glob_i] <= 4 && enim_dir[glob_i] >= 2) waspdir = 1;
+	if (enim_dir[glob_i] <= 7 && enim_dir[glob_i] >= 5) waspdir = 2;
+	if (enim_dir[glob_i] <= 10 && enim_dir[glob_i] >= 8) waspdir = 3;
+	
+	
+	switch (waspdir) {
+		case 3: return (spider_anim == 1 && spider_anim == 3) ? wasp_u0 : wasp_u1;
+		case 0: return (spider_anim == 1 && spider_anim == 3) ? wasp_r0 : wasp_r1;
+		case 1: return (spider_anim == 1 && spider_anim == 3) ? wasp_d0 : wasp_d1;
+		case 2: return (spider_anim == 1 && spider_anim == 3) ? wasp_l0 : wasp_l1;
+	}
 }
 
 void Update(uint32_t a)
@@ -228,13 +278,17 @@ void Update(uint32_t a)
     if(x>312) x=-8;
     if(y>192) y=-8;
 	
-	//if(enim_test) {enim_add(); enim_test--;}
+	if(enim_test > 0) {
+		enim_add();
+		enim_test--;
+	}
 }
 
 void enim_add(){
     enim_pos_x[enim_count] = GetRandomInteger() % 320;
     enim_pos_y[enim_count] = GetRandomInteger() % 200;
     enim_dir[enim_count] = GetRandomInteger() % 16;
+	enim_dir_lenght[enim_count] = GetRandomInteger() % 16;
     enim_count++;
 }
 
@@ -286,12 +340,17 @@ void Draw(Bitmap *b)
     
 	draw_transition (&spider_thing, b, &x, &y);
 	
-	//for (int i = 0; i < enim_count; i++) {
-	//	draw_transition (&enim_thing, b, &(enim_pos_x[i]), &(enim_pos_y[i]));
-	//	DrawRLEBitmap(b, worm00, enim_pos_x[i], enim_pos_y[i]);
-	//}
+	for (int glob_i = 0; glob_i < enim_count; glob_i++) {
+		draw_transition (&enim_thing, b, &(enim_pos_x[glob_i]), &(enim_pos_y[glob_i]));
+		DrawRLEBitmap(b, enim_thing(), enim_pos_x[glob_i], enim_pos_y[glob_i]);
+	}
 	
     if(spider_anim>4) spider_anim=1;
 
     DrawRLEBitmap(b, spider_thing(), x, y);
+	
+	setFont(fontblack8);
+	char Buffer[15];
+	sprintf (Buffer, "%i\n%i\n%i\n%i\n%i", direction, sprite, enim_dir[0], enim_pos_x[0], enim_pos_y[0]);
+	DrawText(b, Buffer, 23, 42);
 }
