@@ -54,7 +54,7 @@ uint32_t points;
 RLEBitmap* enim_sprite[10];
 
 //temp to add test enemys
-uint16_t enim_test = 1;
+uint16_t enim_test = 10;
 
 uint32_t last_button_state=0;
 
@@ -141,6 +141,10 @@ void move_spider(uint32_t direction){
             case 11: y-=1; x+=2; break;
         }
     }
+	if(x<-8) x=320+x;
+    if(y<-8) y=200+y;
+    if(x>312) x=-8;
+    if(y>192) y=-8;
 }
 
 void colltest(){
@@ -184,9 +188,12 @@ void enim_move(){
             case 8: enim_pos_x[i] -=1; enim_pos_y[i] -=2; break;
             case 9: enim_pos_y[i] -=3; break;
             case 10: enim_pos_y[i] -=2; enim_pos_y[i] +=1; break;
-            case 11: enim_pos_y[i]-=1; enim_pos_y[i] +=2; break;
-        
-    }      
+            case 11: enim_pos_y[i]-=1; enim_pos_y[i] +=2; break;      
+		}
+		if(enim_pos_x[i]<-8) enim_pos_x[i]=320+enim_pos_x[i];
+		if(enim_pos_y[i]<-8) enim_pos_y[i]=200+enim_pos_y[i];
+		if(enim_pos_x[i]>312) enim_pos_x[i]=-8;
+		if(enim_pos_y[i]>192) enim_pos_y[i]=-8;
     }
 
 
@@ -202,13 +209,6 @@ const RLEBitmap const* spider_thing(){
 	if (direction <= 4 && direction >= 2) sprite = 2;
 	if (direction <= 7 && direction >= 5) sprite = 3;
 	if (direction <= 10 && direction >= 8) sprite = 4;
-    /*switch(spider_anim){
-        case 1: return (sprite==1) ? (sprite==2) ? (sprite==3) ? spider_d_anim_1 : spider_u_anim_1 : spider_l_anim_1 : spider_r_anim_1;
-        case 2: return (sprite==1) ? (sprite==2) ? (sprite==3) ? spider_d_anim_2 : spider_u_anim_2 : spider_l_anim_2 : spider_r_anim_2;
-        case 3: return (sprite==1) ? (sprite==2) ? (sprite==3) ? spider_d_anim_3 : spider_u_anim_3 : spider_l_anim_3 : spider_r_anim_3;
-        case 4: return (sprite==1) ? (sprite==2) ? (sprite==3) ? spider_d_anim_4 : spider_u_anim_4 : spider_l_anim_4 : spider_r_anim_4;
-        default: return spider;
-    }*/
 	switch(sprite) {
 		case 1: switch(spider_anim) {
 			case 1: return spider_r_anim_1;
@@ -272,11 +272,6 @@ void Update(uint32_t a)
     }
     move_spider(direction);
     enim_move();
-
-    if(x<-8) x=320+x;
-    if(y<-8) y=200+y;
-    if(x>312) x=-8;
-    if(y>192) y=-8;
 	
 	if(enim_test > 0) {
 		enim_add();
