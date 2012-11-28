@@ -201,7 +201,7 @@ const RLEBitmap const* spider_thing(){
 
 //temp
 const RLEBitmap const* enim_thing(){
-    return worm00;
+    return wasp_u0;
 }
 
 void Update(uint32_t a)
