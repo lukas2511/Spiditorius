@@ -36,6 +36,7 @@ void Draw(Bitmap *);
 inline void enim_add();
 inline void enim_move();
 inline void food_add();
+const RLEBitmap const* enim_thing();
 void colltest();
 void GameOver();
 
