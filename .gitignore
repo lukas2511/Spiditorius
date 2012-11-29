@@ -24,3 +24,8 @@ Icon
 .Spotlight-V100
 .Trashes
 
+## Additional custom files
+*.sublime-project
+
+## Don't include documentation (use doxygen instead)
+doc
