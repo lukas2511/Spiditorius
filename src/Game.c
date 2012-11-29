@@ -102,7 +102,7 @@ uint32_t buttonsPressedTime(snes_button_state_t controller_state, uint32_t pusht
 void Init(struct Gamestate* state)
 {
     for(uint32_t timer=0;timer<timers_count;timer++){
-        timers[SPIDER_ANIMATION_TIMER_ID]=0;
+        timers[timer]=0;
     }
     GetRandomInteger();
     enim_count = 0;
@@ -307,12 +307,11 @@ void Update(uint32_t delta)
     }
     move_spider(direction);
     enim_move();
-
+		colltest();
 	if(enim_test > 0) {
 		enim_add();
 		enim_test--;
 	}
-	colltest();
 }
 
 //! \brief Adds a new enemy and makes sure that the new enemy is not in range of Ixi
