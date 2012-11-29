@@ -22,7 +22,7 @@
 #include "../inc/Sprites.h"
 
 typedef uint8_t timer_id_type;
-#define timers_count 20
+#define timers_count 10
 #define SPIDER_ANIMATION_TIMER_ID 0
 #define SPIDER_MOVE_TIMER_ID 3
 #define ENEMY_GENERIC_TIMER_ID 5
@@ -55,10 +55,11 @@ int y=5;
 uint32_t timers[timers_count];
 
 //gegner
-int enim_pos_x[10];
-int enim_pos_y[10];
-uint32_t enim_dir[10];
-uint32_t enim_dir_lenght[10];
+#define MAX_ENEMY_COUNT 20
+int enim_pos_x[MAX_ENEMY_COUNT];
+int enim_pos_y[MAX_ENEMY_COUNT];
+uint32_t enim_dir[MAX_ENEMY_COUNT];
+uint32_t enim_dir_lenght[MAX_ENEMY_COUNT];
 uint32_t enim_count = 0;
 
 uint32_t food_x;
@@ -108,6 +109,7 @@ void Init(struct Gamestate* state)
     enim_count = 0;
     points = 0;
     gameover = 0;
+    food_add();
 }
 
 void OnEnter(struct Gamestate* state)
@@ -321,7 +323,8 @@ void Update(uint32_t delta)
 //! \brief Adds a new enemy and makes sure that the new enemy is not in range of Ixi
 void enim_add(){
     glob_i = enim_count;
-
+    if(MAX_ENEMY_COUNT == enim_count)
+        return;
     // Generate new positions for the enemy as long as the current would harm the player
     do{
         enim_pos_x[enim_count] = GetRandomInteger() % 320;
@@ -400,10 +403,15 @@ void Draw(Bitmap *b)
     if(spider_anim>4) spider_anim=1;
 
     DrawRLEBitmap(b, spider_thing(), x, y);
-
+    DrawRLEBitmap(b, bolt, food_x, food_y);
 	//Debug Output
-	setFont(fontblack8);
-	char Buffer[200];
-	sprintf (Buffer, "%i\n%i\n%i\n%i\n%i\n%i\n%i\n%i\n%i", direction, sprite, enim_dir[0], enim_pos_x[0], enim_pos_y[0], gameover, x, y, enim_count);
-	DrawText(b, Buffer, 23, 42);
+	//setFont(fontblack8);
+	//char Buffer[200];
+	//sprintf (Buffer, "%i\n%i\n%i\n%i\n%i\n%i\n%i\n%i\n%i", direction, sprite, enim_dir[0], enim_pos_x[0], enim_pos_y[0], gameover, x, y, enim_count);
+	//DrawText(b, Buffer, 23, 42);
+
+    setFont(fontblack8);
+    char Buffer[200];
+    sprintf (Buffer, "Score: %i", points);
+    DrawText(b, Buffer, 23, 42);
 }
