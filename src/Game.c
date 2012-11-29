@@ -28,6 +28,8 @@ typedef uint8_t timer_id_type;
 #define ENEMY_GENERIC_TIMER_ID 5
 #define SNES_BUTTON_TIMER_ID 2
 
+
+uint8_t paused = 0;
 void Init(struct Gamestate*);
 void OnEnter(struct Gamestate* state);
 void OnLeave(struct Gamestate* state);
@@ -282,9 +284,13 @@ const RLEBitmap const* enim_thing(){
 */
 void Update(uint32_t delta)
 {
-    for(timer_id_type timer = 0; timer < timers_count; timer++){
-        timers[timer] = timers[timer] + delta;
-    }
+    if(!paused){
+		  for(timer_id_type timer = 0;  timer < timers_count; timer++){
+		      timers[timer] = timers[timer] + delta;
+		  }
+    } else {
+		  timers[SNES_BUTTON_TIMER_ID] += delta;
+	 }
 
     //! \todo Remove self-inflicted collision
     for(int count=1;count<=8;count++){
@@ -295,6 +301,8 @@ void Update(uint32_t delta)
 
     if(buttonsPressedTime(controller_state,10,SNES_BUTTON_TIMER_ID)){
         direction=new_direction(controller_state);
+        if(controller_state.buttons.Start)
+		      paused = !paused;
     }
     move_spider(direction);
     enim_move();
@@ -391,6 +399,6 @@ void Draw(Bitmap *b)
 	//Debug Output
 	setFont(fontblack8);
 	char Buffer[200];
-	sprintf (Buffer, "%i\n%i\n%i\n%i\n%i\n%i", direction, sprite, enim_dir[0], enim_pos_x[0], enim_pos_y[0], gameover);
+	sprintf (Buffer, "%i\n%i\n%i\n%i\n%i\n%i\n%i\n%i", direction, sprite, enim_dir[0], enim_pos_x[0], enim_pos_y[0], gameover, x, y);
 	DrawText(b, Buffer, 23, 42);
 }
