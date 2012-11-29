@@ -40,6 +40,8 @@ const RLEBitmap const* enim_thing();
 void colltest();
 void GameOver();
 
+_Bool gameover = 0;
+
 RLEBitmap const* spider_thing();
 
 Gamestate InitState = { Init, OnEnter, OnLeave, Update, Draw };
@@ -361,6 +363,10 @@ void draw_transition (const struct RLEBitmap * (*toDraw)(), Bitmap *b, int *x, i
     }
 }
 
+void GameOver () {
+	gameover = 1;
+}
+
 /**
 * \brief Takes the given bitmap \a b and displays the current game state.
 */
@@ -384,6 +390,6 @@ void Draw(Bitmap *b)
 
 	setFont(fontblack8);
 	char Buffer[15];
-	sprintf (Buffer, "%i\n%i\n%i\n%i\n%i", direction, sprite, enim_dir[0], enim_pos_x[0], enim_pos_y[0]);
+	sprintf (Buffer, "%i\n%i\n%i\n%i\n%i\n%i", direction, sprite, enim_dir[0], enim_pos_x[0], enim_pos_y[0], gameover);
 	DrawText(b, Buffer, 23, 42);
 }
