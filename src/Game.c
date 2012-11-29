@@ -1,3 +1,11 @@
+/**
+* \file Game.c
+* \brief Contains the game. What else should be in here?
+* \author Stefan
+* \author Lukas Schauer
+* \author Marvin Teichmann
+* \author Benjamin
+*/
 #include <game/Game.h>
 #include <Debug.h>
 #include <game/Filesystem.h>
@@ -13,7 +21,12 @@
 #include <math.h>
 #include "../inc/Sprites.h"
 
+typedef uint8_t timer_id_type;
 #define timers_count 20
+#define SPIDER_ANIMATION_TIMER_ID 0
+#define SPIDER_MOVE_TIMER_ID 3
+#define ENEMY_GENERIC_TIMER_ID 5
+#define SNES_BUTTON_TIMER_ID 2
 
 void Init(struct Gamestate*);
 void OnEnter(struct Gamestate* state);
@@ -36,9 +49,6 @@ int y=5;
 
 uint32_t timers[timers_count];
 
-uint32_t buttonTimes[2];
-
-
 //gegner
 int enim_pos_x[10];
 int enim_pos_y[10];
@@ -56,15 +66,20 @@ RLEBitmap* enim_sprite[10];
 //temp to add test enemys
 uint16_t enim_test = 1;
 
-uint32_t last_button_state=0;
-
 int glob_i;
-
-uint32_t buttonsPressedTime(snes_button_state_t controller_state, uint32_t pushtime, uint32_t timer){
+/**
+* \brief Returns whether the current snes controller state has been stable for \a pushtime miliseconds
+* \param controller_state is the current controller state
+* \param pushtime is the threshhold needed to acknowledge the current state
+* \param timer is the global timer which is going to be used
+* \note The last button state is saved inside of the function.
+*/
+uint32_t buttonsPressedTime(snes_button_state_t controller_state, uint32_t pushtime, timer_id_type timer){
+    static uint32_t last_button_state = 0;
     if(controller_state.raw == 0){
         timers[timer]=0;
         return 0;
-    }else{
+    } else {
         if(controller_state.raw == last_button_state){
             if( timers[timer] > pushtime){
                 timers[timer] = 0;
@@ -82,7 +97,7 @@ uint32_t buttonsPressedTime(snes_button_state_t controller_state, uint32_t pusht
 void Init(struct Gamestate* state)
 {
     for(uint32_t timer=0;timer<timers_count;timer++){
-        timers[0]=0;
+        timers[SPIDER_ANIMATION_TIMER_ID]=0;
     }
     GetRandomInteger();
     enim_count = 0;
@@ -97,14 +112,16 @@ void OnLeave(struct Gamestate* state)
 {
 }
 
+uint32_t spider_anim = 1;
+uint32_t sprite      = 1;
+uint32_t direction   = 2;
 
-
-uint32_t spider_anim=1;
-
-uint32_t sprite=1;
-
-uint32_t direction=2;
-
+/**
+* \brief Updates the direction of the spider according to the given
+*        \a controller_state
+* \note The controller state should be verified with buttonsPressedTime()
+*       first.
+*/
 uint32_t new_direction(snes_button_state_t controller_state){
     uint32_t newdirection=direction;
     if(controller_state.buttons.Left || controller_state.buttons.A){
@@ -118,14 +135,17 @@ uint32_t new_direction(snes_button_state_t controller_state){
     return newdirection;
 }
 
+/**
+* \brief Updates the position of the spider according to the given \a direction.
+*/
 void move_spider(uint32_t direction){
-    if(timers[0]>10){
+    if(timers[SPIDER_ANIMATION_TIMER_ID] > 10){
         spider_anim++;
-        timers[0]=0;
+        timers[SPIDER_ANIMATION_TIMER_ID] = 0;
     }
 
-    if(timers[3] > 4){
-        timers[3] = 0;
+    if(timers[SPIDER_MOVE_TIMER_ID] > 4){
+        timers[SPIDER_MOVE_TIMER_ID] = 0;
         switch(direction){
             case 0: x+=3; break;
             case 1: x +=2; y +=1; break;
@@ -147,28 +167,28 @@ void move_spider(uint32_t direction){
     if(y>192) y=-8;
 }
 
+/**
+* \brief Tests whether the spider collides with an enemy
+* \post GameOver state if the spider collides with an enemy
+* \todo Test collision and implement GameOver
+*/
 void colltest(){
-
-    //in bearbeitung!!!!!!!!!!!!!
-
     //collision spider enim;
-    for(int i = 0; i < enim_count; i++){
-        if(Collision_Sprite_Sprite(enim_pos_x[i], enim_pos_y[i], enim_sprite[i], x, y, spider_thing() ))
+
+    // 2012-11-29 -- 15:18: Replaced local variable with global, so
+    // that we can use enim_thing()
+    for(glob_i = 0; glob_i < enim_count; glob_i++){
+        if(Collision_Sprite_Sprite(enim_pos_x[glob_i], enim_pos_y[glob_i], enim_thing(), x, y, spider_thing()))
             {
                 GameOver();
             }
-
     }
-
-
-
-
 }
 
 void enim_move(){
     //timer passt tempo der gegner an. Auf das diese nicht ruckeln...
-    if(timers[5] > 6){
-        timers[5] = 0;
+    if(timers[ENEMY_GENERIC_TIMER_ID] > 6){
+        timers[ENEMY_GENERIC_TIMER_ID] = 0;
     for(int i = 0; i < enim_count; i++){
 
 		if (enim_dir_lenght[i] == 0) {
@@ -253,21 +273,24 @@ const RLEBitmap const* enim_thing(){
 		case 2: return (spider_anim == 2 || spider_anim == 4) ? wasp_l0 : wasp_l1;
 	}
 }
-
-void Update(uint32_t a)
+/**
+* \brief Updates the current game state
+* \param delta is the time that has passed since the last update.
+*/
+void Update(uint32_t delta)
 {
-    for(uint32_t timer=0;timer<timers_count;timer++){
-        timers[timer]=timers[timer]+a;
+    for(timer_id_type timer = 0; timer < timers_count; timer++){
+        timers[timer] = timers[timer] + delta;
     }
 
+    //! \todo Remove self-inflicted collision
     for(int count=1;count<=8;count++){
         Collision_Sprite_Sprite(0, 0, spider_thing(), 10*count, 10*count, spider_thing());
     }
 
-
     snes_button_state_t controller_state = GetControllerState1();
 
-    if(buttonsPressedTime(controller_state,10,2)){
+    if(buttonsPressedTime(controller_state,10,SNES_BUTTON_TIMER_ID)){
         direction=new_direction(controller_state);
     }
     move_spider(direction);
@@ -279,11 +302,20 @@ void Update(uint32_t a)
 	}
 }
 
+//! \brief Adds a new enemy and makes sure that the new enemy is not in range of Ixi
 void enim_add(){
-    enim_pos_x[enim_count] = GetRandomInteger() % 320;
-    enim_pos_y[enim_count] = GetRandomInteger() % 200;
-    enim_dir[enim_count] = GetRandomInteger() % 16;
-	enim_dir_lenght[enim_count] = GetRandomInteger() % 16;
+    glob_i = enim_count;
+
+    // Generate new positions for the enemy as long as the current would harm the player
+    do{
+        enim_pos_x[enim_count] = GetRandomInteger() % 320;
+        enim_pos_y[enim_count] = GetRandomInteger() % 200;
+        enim_dir[enim_count] = GetRandomInteger() % 16;
+    	enim_dir_lenght[enim_count] = GetRandomInteger() % 16;
+    }while(
+        Collision_BB_BB(enim_pos_x[glob_i], enim_pos_y[glob_i], enim_thing()->width,       enim_thing()->height,
+                        x - 5,              y - 5,              spider_thing()->widht + 5, spider_thing()->height+ 5)
+    );
     enim_count++;
 }
 
@@ -328,6 +360,9 @@ void draw_transition (const struct RLEBitmap * (*toDraw)(), Bitmap *b, int *x, i
     }
 }
 
+/**
+* \brief Takes the given bitmap \a b and displays the current game state.
+*/
 void Draw(Bitmap *b)
 {
     ClearBitmap(b);
