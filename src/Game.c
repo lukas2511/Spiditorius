@@ -305,11 +305,12 @@ void Update(uint32_t delta)
 	colltest();
 
     // eat_food+
-    /*
-    if(Collision_Sprite_Sprite(x,y,spider_thing(),food_x,food_y,food_image)){
+
+    if(Collision_Sprite_Sprite(x,y,spider_thing(),food_x,food_y,bolt)){
         enim_add();
         food_add();
-    }*/
+        points++;
+    }
 
 	if(enim_test > 0) {
 		enim_add();
