@@ -67,7 +67,7 @@ uint32_t buttonsPressedTime(snes_button_state_t controller_state, uint32_t pusht
     }else{
         if(controller_state.raw == last_button_state){
             if( timers[timer] > pushtime){
-                timers[timer] = 0;                
+                timers[timer] = 0;
                 return 1;
             }else{
                 return 0;
@@ -156,10 +156,10 @@ void colltest(){
         if(Collision_Sprite_Sprite(enim_pos_x[i], enim_pos_y[i], enim_sprite[i], x, y, spider_thing() ))
             {
                 GameOver();
-            }      
+            }
 
     }
-    
+
 
 
 
@@ -170,12 +170,12 @@ void enim_move(){
     if(timers[5] > 6){
         timers[5] = 0;
     for(int i = 0; i < enim_count; i++){
-		
+
 		if (enim_dir_lenght[i] == 0) {
 			enim_dir[i] = GetRandomInteger() % 11;
 			enim_dir_lenght[i] = GetRandomInteger() % 16;
 		} else enim_dir_lenght[i]--;
-		
+
         switch(enim_dir[i]){
             case 0: enim_pos_x[i]+=3; break;
             case 1: enim_pos_x[i] +=2; enim_pos_y[i] +=1; break;
@@ -188,7 +188,7 @@ void enim_move(){
             case 8: enim_pos_x[i] -=1; enim_pos_y[i] -=2; break;
             case 9: enim_pos_y[i] -=3; break;
             case 10: enim_pos_y[i] -=2; enim_pos_y[i] +=1; break;
-            case 11: enim_pos_y[i]-=1; enim_pos_y[i] +=2; break;      
+            case 11: enim_pos_y[i]-=1; enim_pos_y[i] +=2; break;
 		}
 		if(enim_pos_x[i]<-8) enim_pos_x[i]=320+enim_pos_x[i];
 		if(enim_pos_y[i]<-8) enim_pos_y[i]=200+enim_pos_y[i];
@@ -244,8 +244,8 @@ const RLEBitmap const* enim_thing(){
 	if (enim_dir[glob_i] <= 4 && enim_dir[glob_i] >= 2) waspdir = 1;
 	if (enim_dir[glob_i] <= 7 && enim_dir[glob_i] >= 5) waspdir = 2;
 	if (enim_dir[glob_i] <= 10 && enim_dir[glob_i] >= 8) waspdir = 3;
-	
-	
+
+
 	switch (waspdir) {
 		case 3: return (spider_anim == 1 || spider_anim == 3) ? wasp_u0 : wasp_u1;
 		case 0: return (spider_anim == 2 || spider_anim == 4) ? wasp_r0 : wasp_r1;
@@ -272,7 +272,7 @@ void Update(uint32_t a)
     }
     move_spider(direction);
     enim_move();
-	
+
 	if(enim_test > 0) {
 		enim_add();
 		enim_test--;
@@ -332,18 +332,20 @@ void Draw(Bitmap *b)
 {
     ClearBitmap(b);
     DrawFilledRectangle(b, 0, 0, 320, 200, RGB(255,255,255));
-    
+
 	draw_transition (&spider_thing, b, &x, &y);
-	
-	for (int glob_i = 0; glob_i < enim_count; glob_i++) {
+
+    // 2012-11-29 -- 15:12: removed local redefinition of glob_i, as it is
+    // needed and referenced by enim_thing!
+	for (glob_i = 0; glob_i < enim_count; glob_i++) {
 		draw_transition (&enim_thing, b, &(enim_pos_x[glob_i]), &(enim_pos_y[glob_i]));
 		DrawRLEBitmap(b, enim_thing(), enim_pos_x[glob_i], enim_pos_y[glob_i]);
 	}
-	
+
     if(spider_anim>4) spider_anim=1;
 
     DrawRLEBitmap(b, spider_thing(), x, y);
-	
+
 	setFont(fontblack8);
 	char Buffer[15];
 	sprintf (Buffer, "%i\n%i\n%i\n%i\n%i", direction, sprite, enim_dir[0], enim_pos_x[0], enim_pos_y[0]);
