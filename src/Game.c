@@ -42,7 +42,7 @@ const RLEBitmap const* enim_thing();
 void colltest();
 void GameOver();
 
-_Bool gameover = 0;
+uint32_t gameover = 0;
 
 RLEBitmap const* spider_thing();
 
@@ -107,6 +107,7 @@ void Init(struct Gamestate* state)
     GetRandomInteger();
     enim_count = 0;
     points = 0;
+    gameover = 0;
 }
 
 void OnEnter(struct Gamestate* state)
@@ -311,6 +312,7 @@ void Update(uint32_t delta)
 		enim_add();
 		enim_test--;
 	}
+	colltest();
 }
 
 //! \brief Adds a new enemy and makes sure that the new enemy is not in range of Ixi
@@ -372,7 +374,7 @@ void draw_transition (const struct RLEBitmap * (*toDraw)(), Bitmap *b, int *x, i
 }
 
 void GameOver () {
-	gameover = 1;
+	gameover++;
 }
 
 /**
@@ -399,6 +401,6 @@ void Draw(Bitmap *b)
 	//Debug Output
 	setFont(fontblack8);
 	char Buffer[200];
-	sprintf (Buffer, "%i\n%i\n%i\n%i\n%i\n%i\n%i\n%i", direction, sprite, enim_dir[0], enim_pos_x[0], enim_pos_y[0], gameover, x, y);
+	sprintf (Buffer, "%i\n%i\n%i\n%i\n%i\n%i\n%i\n%i\n%i", direction, sprite, enim_dir[0], enim_pos_x[0], enim_pos_y[0], gameover, x, y, enim_count);
 	DrawText(b, Buffer, 23, 42);
 }
