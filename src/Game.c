@@ -293,11 +293,6 @@ void Update(uint32_t delta)
 		  timers[SNES_BUTTON_TIMER_ID] += delta;
 	 }
 
-    //! \todo Remove self-inflicted collision
-    for(int count=1;count<=8;count++){
-        Collision_Sprite_Sprite(0, 0, spider_thing(), 10*count, 10*count, spider_thing());
-    }
-
     snes_button_state_t controller_state = GetControllerState1();
 
     if(buttonsPressedTime(controller_state,10,SNES_BUTTON_TIMER_ID)){
