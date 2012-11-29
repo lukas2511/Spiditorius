@@ -33,9 +33,9 @@ void OnEnter(struct Gamestate* state);
 void OnLeave(struct Gamestate* state);
 void Update(uint32_t);
 void Draw(Bitmap *);
-inline void enim_add();
-inline void enim_move();
-inline void food_add();
+void enim_add();
+void enim_move();
+void food_add();
 const RLEBitmap const* enim_thing();
 void colltest();
 void GameOver();
@@ -69,7 +69,7 @@ RLEBitmap* enim_sprite[10];
 //temp to add test enemys
 uint16_t enim_test = 1;
 
-int glob_i;
+int glob_i = 0;
 /**
 * \brief Returns whether the current snes controller state has been stable for \a pushtime miliseconds
 * \param controller_state is the current controller state
@@ -390,7 +390,7 @@ void Draw(Bitmap *b)
 	
 	//Debug Output
 	setFont(fontblack8);
-	char Buffer[15];
+	char Buffer[200];
 	sprintf (Buffer, "%i\n%i\n%i\n%i\n%i\n%i", direction, sprite, enim_dir[0], enim_pos_x[0], enim_pos_y[0], gameover);
 	DrawText(b, Buffer, 23, 42);
 }
