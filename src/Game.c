@@ -387,7 +387,8 @@ void Draw(Bitmap *b)
     if(spider_anim>4) spider_anim=1;
 
     DrawRLEBitmap(b, spider_thing(), x, y);
-
+	
+	//Debug Output
 	setFont(fontblack8);
 	char Buffer[15];
 	sprintf (Buffer, "%i\n%i\n%i\n%i\n%i\n%i", direction, sprite, enim_dir[0], enim_pos_x[0], enim_pos_y[0], gameover);
