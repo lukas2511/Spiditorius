@@ -315,7 +315,7 @@ void enim_add(){
     	enim_dir_lenght[enim_count] = GetRandomInteger() % 16;
     }while(
         Collision_BB_BB(enim_pos_x[glob_i], enim_pos_y[glob_i], enim_thing()->width,       enim_thing()->height,
-                        x - 5,              y - 5,              spider_thing()->widht + 5, spider_thing()->height+ 5)
+                        x - 5,              y - 5,              spider_thing()->width + 5, spider_thing()->height+ 5)
     );
     enim_count++;
 }
