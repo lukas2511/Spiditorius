@@ -302,7 +302,15 @@ void Update(uint32_t delta)
     }
     move_spider(direction);
     enim_move();
-		colltest();
+	colltest();
+
+    // eat_food+
+    /*
+    if(Collision_Sprite_Sprite(x,y,spider_thing(),food_x,food_y,food_image)){
+        enim_add();
+        food_add();
+    }*/
+
 	if(enim_test > 0) {
 		enim_add();
 		enim_test--;
@@ -391,7 +399,7 @@ void Draw(Bitmap *b)
     if(spider_anim>4) spider_anim=1;
 
     DrawRLEBitmap(b, spider_thing(), x, y);
-	
+
 	//Debug Output
 	setFont(fontblack8);
 	char Buffer[200];
